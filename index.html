@@ -10,545 +10,1698 @@
 
 <body class="text-justify">
 
-  <header>
-    <h1><span class="latex">Parametrische Zeichen</h1>
-    <p class="author">
-      Leo Hess <br />
-      Januar 2026
-    </p>
-    <div class="abstract">
-      <h2>Abstract</h2>
-      <p>
-        Schrift hat sich immer gemeinsam mit neuen Technologien entwickelt, da die genutzten Werkzeuge ihre Form und
-        ihre Gestaltungsmöglichkeiten stark geprägt haben. In der heutigen Schriftgestaltung werden diese Werkzeuge oft
-        als gegebene Sprache akzeptiert und nur selten hinterfragt. Digitale Schrift wird zwar flexibel eingesetzt, ihr
-        Entwurf folgt jedoch meist weiterhin statischen, zeichnerischen Methoden. Diese Arbeit untersucht, wie sich
-        typografische Gestaltung verändert, wenn Schrift nicht als fest gezeichnete Form, sondern als parametrisches
-        System verstanden wird. Im Mittelpunkt steht die Frage, welche gestalterischen Möglichkeiten durch regelbasierte
-        Ansätze entstehen und welche Rolle Open-Source-Strukturen dabei spielen.
-      </p>
-      <p>
-        Die Arbeit folgt der Vorstellung, dass Gestaltung auf Regeln und Programmen basieren kann. Schrift dient dabei
-        als besonders geeigneter Anwendungsfall, um dieses Prinzip im Kommunikationsdesign zu untersuchen.
-      </p>
-      <p>
-        Ein historischer Rückblick über computergestützte Schriftsysteme vor der Einführung von PostScript zeigt, dass
-        parametrische und programmatische Ansätze bereits früh existierten, jedoch durch die Standardisierung von
-        Bézier-basierten Outline-Modellen in den Hintergrund traten. Am Beispiel von METAFONT werden Idee, Anspruch und
-        Kritik parametrischer Schriftgestaltung analysiert.
-      </p>
-      <p>
-        Im praktischen Teil werden eigene Experimente in METAPOST durchgeführt, um parametrische Zeichenmethoden zu
-        erforschen. Die daraus gewonnenen Erkenntnisse fließen in die Entwicklung einer offenen parametrischen Schrift
-        und eines Web-Tools für flexible Typographische Kompositionen ein.
-      </p>
-      <p>
-        Die Arbeit zeigt, dass parametrische Schriftgestaltung weniger als Ersatz klassischer Methoden zu verstehen ist,
-        sondern als Erweiterung des typografischen Entwurfsprozess, bei dem Gestaltung als offenes, experimentelles
-        System gedacht wird.
-      </p>
+  <style>
+    .title-page {
+      text-align: center;
+      margin-bottom: 4rem;
+      padding-top: 2rem;
+    }
+
+    .university-header {
+      text-transform: uppercase;
+      margin-bottom: 3rem;
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+
+    .main-title {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      margin-top: 1.5rem;
+      display: none;
+      /* Hidden on web, shown in print */
+    }
+
+    .header-gif {
+      max-width: 100%;
+      height: auto;
+      margin: 1rem auto;
+      display: block;
+    }
+
+    .subtitle {
+      font-size: 1.2rem;
+      margin-bottom: 4rem;
+      font-weight: normal;
+    }
+
+    .submission-info {
+      margin-top: 4rem;
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    .submission-info strong {
+      font-weight: normal;
+      /* LaTeX usually isn't bold here, but let's keep it simple or use small caps */
+      font-variant: small-caps;
+    }
+
+    @media print {
+      .title-page {
+        break-after: page;
+        page: no-numbers;
+      }
+
+      .header-gif {
+        display: none !important;
+      }
+
+      .main-title {
+        display: block !important;
+      }
+
+      .toc {
+        display: block !important;
+        /* Show in print */
+        break-after: page;
+        page: no-numbers;
+      }
+
+      .abstract {
+        break-after: page;
+      }
+
+      .page-break {
+        break-after: page;
+      }
+
+      body {
+        background-color: white;
+      }
+
+      /* Reset margins for headings at start of page */
+      article h2:first-child,
+      .page-break+h2 {
+        margin-top: 0.1 !important;
+      }
+    }
+
+    /* Hide the default abstract style for now if it conflicts, or just leave it below */
+
+    /* Sidebar Styles */
+    #sidebar {
+
+      position: fixed;
+      top: 0;
+      left: -300px;
+      width: 300px;
+      height: 100%;
+      background-color: #f0f0f0;
+      overflow-x: hidden;
+      overflow-y: auto;
+      transition: 0.3s;
+      z-index: 1000;
+      padding: 60px 20px 20px 20px;
+      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+      font-size: 0.9rem;
+    }
+
+    #sidebar.active {
+      left: 0;
+    }
+
+    #menu-toggle {
+      position: fixed;
+      left: 20px;
+      top: 20px;
+      z-index: 1001;
+      font-size: 1.2rem;
+      cursor: pointer;
+      background: #ddd;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+    }
+
+    #menu-toggle:hover {
+      background: #ccc;
+    }
+
+    /* Adjust sidebar links */
+    #sidebar a {
+      text-decoration: none;
+      color: #333;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    #sidebar a:hover {
+      color: #000;
+      text-decoration: underline;
+    }
+
+    #sidebar ol {
+      padding-left: 20px;
+    }
+
+    #sidebar ol ol {
+      display: none;
+    }
+
+    #sidebar li.expanded>ol {
+      display: block;
+    }
+
+    @media print {
+
+      #sidebar,
+      #menu-toggle {
+        display: none !important;
+      }
+    }
+      
+      .footnotes {
+  font-size: 0.85em;
+}
+      
+
+    /* Custom Sidenote Figure Styles */
+    .figure-sidenote {
+      display: block;
+      width: 105%;
+      /* Shift further right to create distance from text */
+      margin-left: 10%;
+      margin-top: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .figure-sidenote img {
+      width: 100%;
+      height: auto;
+      border: 1px solid #ddd;
+    }
+
+    .figure-caption {
+      display: block;
+      font-size: 0.8em;
+      line-height: 1.2;
+      color: #666;
+      margin-top: 0.3rem;
+    }
+
+    .sidenote-marker {
+      font-style: italic;
+      color: #666;
+      margin-left: 0.2rem;
+    }
+
+    @media print {
+
+      .sidenote {
+        position: static !important;
+        float: none !important;
+
+        display: flex !important;
+        /* Enable flex layout */
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        /* Spread items */
+        gap: 1rem;
+
+        width: 100% !important;
+
+        margin-top: 0.5em !important;
+        margin-bottom: 1em !important;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 0.5em;
+        page-break-inside: avoid;
+      }
+
+      /* Side-by-Side Logic */
+      .figure-sidenote {
+        display: block !important;
+        width: 48% !important;
+        /* ~50% minus gap */
+        margin: 0 !important;
+        flex: 0 0 48%;
+        /* Flex basis */
+
+        position: static !important;
+        float: none !important;
+      }
+
+      .figure-sidenote img {
+        width: 100% !important;
+        /* Full width of the 48% container */
+        height: auto !important;
+      }
+
+      .sidenote-marker {
+        display: inline;
+      }
+
+      /* Specific adjustment for Figure 5 */
+      #fig-5 img {
+        width: 78% !important;
+      }
+
+      /* Reduce Figures 11 & 12 by ~5% (48% -> ~44%) */
+      #fig-11,
+      #fig-12 {
+        width: 40% !important;
+        flex: 0 0 40% !important;
+      }
+    }
+
+    @page {
+      size: A4;
+      margin: 15mm;
+
+      @bottom-center {
+        content: counter(page) " von " counter(pages);
+        font-family: 'Latin Modern';
+
+        font-size: 12pt;
+        color: #666;
+      }
+    }
+
+    @page no-numbers {
+      @bottom-center {
+        content: none;
+      }
+    }
+
+
+    .toc {
+      display: none;
+      /* Hide on screen */
+    }
+
+    /* Hint Visibility Logic */
+    .hint-web {
+      display: inline;
+    }
+
+    .hint-print {
+      display: none;
+    }
+
+    @media print {
+      .hint-web {
+        display: none !important;
+      }
+
+      .hint-print {
+        display: inline !important;
+      }
+    
+     
+
+    /* Chapter Font Assignments */
+    @font-face {
+      font-family: 'Garamond-Meta-05';
+      src: url('fonts/Garamond-Meta-5.ttf') format('truetype');
+    }
+
+    @font-face {
+      font-family: 'Garamond-Meta-07';
+      src: url('fonts/Garamond-Meta-7.ttf') format('truetype');
+    }
+
+    @font-face {
+      font-family: 'Garamond-Meta-15';
+      src: url('fonts/Garamond-Meta-15.ttf') format('truetype');
+    }
+
+    @font-face {
+      font-family: 'Garamond-Meta-16';
+      src: url('fonts/Garamond-Meta-16.ttf') format('truetype');
+    }
+
+    @font-face {
+      font-family: 'Garamond-Meta-25';
+      src: url('fonts/Garamond-Meta-25.ttf') format('truetype');
+    }
+
+    @font-face {
+      font-family: 'Garamond-Meta-31';
+      src: url('fonts/Garamond-Meta-31.ttf') format('truetype');
+    }
+
+    @font-face {
+      font-family: 'Garamond-Meta-34';
+      src: url('fonts/Garamond-Meta-34.ttf') format('truetype');
+    }
+
+    @font-face {
+      font-family: 'Garamond-Meta-Punk';
+      src: url('fonts/Garamond-Meta-Punk.ttf') format('truetype');
+    }
+
+    /* Font Assignments & Scaling */
+
+    /* Scale all chapter titles (Web & Print) */
+    h2[id^="1-"],
+    h2[id^="2-"],
+    h2[id^="3-"],
+    h2[id^="4-"],
+    h2[id^="5-"],
+    h2[id^="6-"],
+    h2[id^="7-"],
+    h2[id^="8-"] {
+      font-size: 300%;
+    }
+
+    /* Scale all subchapters (Web & Print) */
+    h3[id^="1-"],
+    h3[id^="2-"],
+    h3[id^="3-"],
+    h3[id^="4-"],
+    h3[id^="5-"],
+    h3[id^="6-"],
+    h3[id^="7-"],
+    h3[id^="8-"] {
+      font-size: 250%;
+    }
+
+    /* Assign fonts to Chapters and Subchapters */
+    h2[id^="1-"],
+    h3[id^="1-"] {
+      font-family: 'Garamond-Meta-05', serif;
+    }
+
+    h2[id^="2-"],
+    h3[id^="2-"] {
+      font-family: 'Garamond-Meta-07', serif;
+    }
+
+    h2[id^="3-"],
+    h3[id^="3-"] {
+      font-family: 'Garamond-Meta-15', serif;
+    }
+
+    h2[id^="4-"],
+    h3[id^="4-"] {
+      font-family: 'Garamond-Meta-16', serif;
+    }
+
+    h2[id^="5-"],
+    h3[id^="5-"] {
+      font-family: 'Garamond-Meta-25', serif;
+    }
+
+    h2[id^="6-"],
+    h3[id^="6-"] {
+      font-family: 'Garamond-Meta-31', serif;
+    }
+
+    h2[id^="7-"],
+    h3[id^="7-"] {
+      font-family: 'Garamond-Meta-34', serif;
+    }
+
+    h2[id^="8-"],
+    h3[id^="8-"] {
+      font-family: 'Garamond-Meta-Punk', serif;
+    }
+  </style>
+
+  <button id="menu-toggle">☰ Inhalt</button>
+  <div id="sidebar"></div>
+
+  <header class="title-page">
+    <div class="university-header">
+      Hochschule für Angewandte Wissenschaften Hamburg HAW<br>
+      Fakultät Design, Medien und Information DMI<br>
+      Department Design
+    </div>
+
+    <img src="Parametrische-Zeichen.gif" alt="Header GIF: Parametrische Zeichen" class="header-gif">
+
+    <h1 class="main-title">Parametrische Zeichen</h1>
+    <p class="subtitle">Open-Source als Basis für flexible Schriftgestaltung</p>
+
+    <div class="submission-info">
+      Januar 2026<br>
+      <br>
+      Vorgelegt von:<br>
+      Leo Hess<br>
+      Kommunikations Design<br>
+      Bachelor of Arts<br>
+      Matrikel-Nr.: 2759092<br>
+      Email-Adresse: leo.hess@haw-hamburg.de<br>
+      <br>
+      Erstprüfer: Pierre Pané-Farré<br>
+      Zweitprüfer: Simon Thiefes<br>
+      <br>
+
     </div>
   </header>
 
   <nav role="navigation" class="toc">
     <h2>Inhaltsverzeichnis</h2>
     <ol>
-      <li><a href="#einleitung"> Einleitung</a></li>
-      <li><a href="#kontext"> Kontext</a>
+      <li><a href="#1-einleitung"> Einleitung</a></li>
+      <li>
+        <a href="#2-kontext"> Kontext Schriftprogramme</a>
         <ol>
-          <li><a href="#gerstner"> Parametrische Systeme im Design</a></li>
-          <li><a href="#aktuelle-systeme"> Aktuelle Systeme im Design</a></li>
+          <li><a href="#2-1-gerstner-parametrische-systeme-im-design"> Gerstners Programme im Design</a></li>
+          <li><a href="#2-2-aktuelle-systeme-im-design"> Aktuelle Programme im Design</a></li>
         </ol>
       </li>
-      <li><a href="#historischer-hintergrund"> Historischer Hintergrund</a></li>
-      <li><a href="#metafont"> METAFONT</a></li>
-      <li><a href="#wiederentdeckung"> Wiederentdeckung Parametrischer Gestaltung</a>
+      <li><a href="#3-historischer-hintergrund"> Historischer Hintergrund</a></li>
+      <li>
+        <a href="#4-metafont"> Metafont</a>
         <ol>
-          <li><a href="#generatives-design"> Generatives Design Heute</a></li>
-          <li><a href="#open-source-kultur"> Open-Source-Kultur</a></li>
+          <li><a href="#4-1-warum-metafont-scheiterte"> Warum Metafont scheiterte</a></li>
         </ol>
       </li>
-      <li><a href="#experiment"> Experiment: Parametrische Typografie mit METAPOST</a></li>
-      <li><a href="#analyse"> Analyse: Potenziale parametrischer Schriftgestaltung</a></li>
-      <li><a href="#schluss"> Schluss</a></li>
+      <li>
+        <a href="#5-wiederentdeckung-parametrischer-gestaltung"> Parametrische Gestaltung Heute</a>
+        <ol>
+          <li><a href="#5-1-zugang-und-offenheit"> Zugang und Offenheit</a></li>
+          <li><a href="#5-2-open-source-kultur-berblick"> Überblick Open-Source-Kultur</a></li>
+        </ol>
+      </li>
+      <li>
+        <a href="#6-eigene-experimente-in-metapost"> Eigene Experimente in Metapost</a>
+        <ol>
+          <li><a href="#6-1-aufbau-des-experiments"> Aufbau des Experiments</a></li>
+          <li><a href="#6-2-dokumentation-des-experiments"> Dokumentation des Experiments</a></li>
+          <li><a href="#6-3-anwendungen-im-web-tool"> Anwendungen im Web Tool</a></li>
+          <li><a href="#6-4-thesis-website"> Thesis-Website</a></li>
+        </ol>
+      </li>
+      <li><a href="#7-analyse-der-experimente"> Analyse der Experimente</a></li>
+      <li><a href="#8-schluss"> Schluss</a></li>
     </ol>
   </nav>
 
-  <article class="no-indent">
-    <h1 id="einleitung">1. Einleitung</h1>
-    <p>
-      Gestaltung findet heute zunehmend in digitalen, dynamischen Kontexten statt. Viele Entwurfsprozesse bewegen sich
-      heute in Richtung von Systemen, die Variation, Automatisierung und flexible Anpassung ermöglichen. In der
-      Schriftgestaltung hingegen bleiben die eingesetzten Werkzeuge häufig an statische Umrissformen gebunden, die eher
-      an analoge Schriftgestaltung erinnern.
-    </p>
-    <p>
-      Obwohl Schriftformate durch OpenType-Technologien flexibler geworden sind, bleibt der Entwurfsprozess der Schrift
-      meist an das manuelle Zeichnen von Bézier-Konturen gebunden.
-    </p>
-    <p>
-      Diese Arbeitsweise hat sich durchgesetzt denn sie ist effizient und bequem, jedoch beeinflusst sie auch die
-      ästhetischen Ergebnisse, indem sie bestimmte Formen und Gesten bevorzugt.
-    </p>
-    <p>
-      Die Abhängigkeit von digitalen Zeichenwerkzeugen bleibt oft unhinterfragt.
-    </p>
-    <p>
-      Software wird als bloßes Mittel zur Umsetzung verstanden. Doch dass sie zugleich die Logik des Entwerfens vorgibt,
-      bleibt meist unbeachtet. Der Entwurfsprozess folgt damit einer etablierten Sprache, die wir nicht in Frage
-      stellen. Dies führt auch dazu das unser gestalterischer Spielraum begrenzt ist. Diese Arbeit untersucht daher, wie
-      sich typografische Gestaltung verändert, wenn Schrift nicht gezeichnet, sondern programmiert wird, wenn (moderne)
-      Schriften als das verstanden werden, was sie letztendlich heutzutage sind: Digitale Strukturen und Software.
-    </p>
-    <p>
-      Daraus ergibt sich die Zentrale Forschungsfrage dieser Arbeit:
-    </p>
-    <p class="theorem">
-      Wie verändert sich typografische Gestaltung, wenn sie auf parametrischen Prinzipien statt auf manuell gezeichneten
-      Formen basiert – und welche Rolle können Open-Source-Tools dabei spielen?
-    </p>
-    <p>
-      Methodisch folgt die Arbeit einem forschend-gestalterischen Ansatz. Theorie und Praxis bilden dabei zwei sich
-      ergänzende Ebenen. Eine theoretische Analyse historischer und aktueller parametrischer Systeme bildet den Rahmen
-      und Bezugspunkte, während Experimente mit Metapost sowie die Entwicklung eines Poster Tools den praktischen Kern
-      der Untersuchung darstellen. Ziel ist es, durch diese Verbindung Erkenntnisse über die Potenziale parametrischer
-      Schriftgestaltung zu gewinnen und zu reflektieren.
-    </p>
-    <p>
-      Aufbau der Arbeit:
-      Kapitel 2 führt in die theoretischen Grundlagen und den Kontext ein. Kapitel 3 widmet sich historischen,
-      technischen und gestalterischen Aspekten parametrischer Schriftgestaltung. Kapitel 4 behandelt explizit die
-      Geschichte und Funktionsweise von Metafont. Kapitel 5 geht auf den heutigen stand der Dinge ein. Kapitel 6
-      dokumentiert die experimentelle Praxis und das gestalterische Projekt, zum Schluss fasst Kapitel 7 die
-      Erkenntnisse zusammen und gibt einen Ausblick.
-    </p>
+  <div class="abstract">
+    <h2>Abstract</h2>
+    <p>Schrift hat sich immer gemeinsam mit neuen Technologien entwickelt, da die genutzten Werkzeuge ihre Form und ihre
+      Gestaltungsmöglichkeiten stark geprägt haben. In der heutigen Schriftgestaltung werden diese Werkzeuge oft als
+      gegebene Sprache akzeptiert und nur selten hinterfragt. Digitale Schrift wird zwar flexibel eingesetzt, ihr
+      Entwurf folgt jedoch meist weiterhin statischen, zeichnerischen Methoden. Diese Arbeit untersucht, wie sich
+      typografische Gestaltung verändert, wenn Schrift nicht als fest gezeichnete Form, sondern als parametrisches
+      System verstanden wird. Im Mittelpunkt steht die Frage, welche gestalterischen Möglichkeiten durch regelbasierte
+      Ansätze entstehen und welche Rolle Open-Source-Strukturen dabei spielen.</p>
+    <p>Die Arbeit folgt der Vorstellung, dass Gestaltung auf Regeln und Programmen basieren kann. Schrift dient dabei
+      als besonders geeigneter Anwendungsfall, um dieses Prinzip im Kommunikationsdesign zu untersuchen.</p>
+    <p>Ein historischer Rückblick über computergestützte Schriftsysteme vor der Einführung von PostScript zeigt, dass
+      parametrische und programmatische Ansätze bereits früh existierten, jedoch durch die Standardisierung von
+      Bézier-basierten Outline-Modellen in den Hintergrund traten. Am Beispiel von METAFONT werden Idee, Anspruch und
+      Kritik parametrischer Schriftgestaltung analysiert.</p>
+    <p>Im praktischen Teil werden eigene Experimente in METAPOST durchgeführt, um parametrische Zeichenmethoden zu
+      erforschen. Die daraus gewonnenen Erkenntnisse fließen in die Entwicklung einer offenen parametrischen Schrift und
+      die Weiterentwicklung eines <em>Web-Tools</em> für flexible Typographische Kompositionen ein. Die Arbeit zeigt,
+      dass parametrische Schriftgestaltung weniger als Ersatz klassischer Methoden zu verstehen ist,
+      sondern als Erweiterung des typografischen Entwurfsprozess, bei dem Gestaltung als offenes, experimentelles System
+      gedacht wird.</p>
 
-    <h1 id="kontext">2. Kontext</h1>
-    <p>
-      Die Art wie Schriften produziert und gestaltet wurden, hat sich auch wie in vielen anderen kreativen Bereichen,
+    <br>
+    <span class="hint-web"><b>Hinweis:</b> Diese Thesis lässt sich über den Browser (vorzugsweise Chrome) mit cmd+P
+      drucken!</span>
+    <span class="hint-print"><b>Hinweis:</b> Diese Thesis ist mit erweiterten Funktionen auch im Web verfügbar!</span>
+
+  </div>
+  <article class="indent-pars">
+
+    <h2 id="1-einleitung">1. Einleitung</h2>
+    <p>Gestaltung findet heute zunehmend in digitalen, dynamischen Kontexten statt. Viele Entwurfsprozesse bewegen sich
+      heute in Richtung von Systemen, die Variation, Automatisierung und flexible Anpassung ermöglichen. In der
+      Schriftgestaltung hingegen ist der Entwurfsprozess bis heute überwiegend an das Zeichnen statischer
+      Bézier-Konturen gebunden, die eher an analoge Schriftgestaltung erinnern. Zwar ermöglicht das OpenType-Format,
+      mithilfe von Code und sogenannten OpenType-Features, erweiterte typografische Funktionen. Doch dies verändert
+      nicht die grundlegende Logik des Entwerfens. Diese Arbeitsweise hat sich durchgesetzt, denn sie ist effizient und
+      bequem, jedoch beeinflusst sie auch die ästhetischen Ergebnisse, indem sie bestimmte Formen und Gesten
+      bevorzugt.<sup id="fnref:1"><a href="#fn:1" role="doc-noteref">1</a></sup></p>
+    <p>Die Abhängigkeit von digitalen Zeichenwerkzeugen bleibt oft unhinterfragt. Software wird als bloßes Mittel zur
+      Umsetzung verstanden. Doch dass sie zugleich die Logik des Entwerfens vorgibt, bleibt meist unbeachtet. Der
+      Entwurfsprozess folgt damit einer etablierten Sprache, die wir nicht in Frage stellen. Dies führt auch dazu das
+      der gestalterische Spielraum in der Schriftgestaltung begrenzt ist. Diese Arbeit untersucht daher, wie sich
+      typografische Gestaltung verändert, wenn Schrift nicht gezeichnet, sondern programmiert wird, wenn moderne
+      Schriften als das verstanden werden, was sie letztendlich heutzutage sind: Digitale Strukturen und Software.<br>
+      Daraus ergibt sich die <b>Zentrale Forschungsfrage dieser Arbeit:</b></p>
+    <blockquote><em>Wie verändert sich typografische Gestaltung, wenn sie auf parametrischen Prinzipien statt auf
+        manuell gezeichneten Formen basiert – und welche Rolle können Open-Source-Tools dabei spielen?</em></blockquote>
+    <p>Methodisch folgt die Arbeit einem forschend-gestalterischen Ansatz. Theorie und Praxis bilden dabei zwei sich
+      ergänzende Ebenen. Eine theoretische Analyse historischer und aktueller parametrischer Systeme bildet den Rahmen
+      und Bezugspunkte, während Experimente mit Metapost sowie die Weiterentwicklung eines <em>Web-Tools</em> den
+      praktischen Kern
+      der Untersuchung darstellen. Ziel ist es, durch diese Verbindung Erkenntnisse über die Potenziale parametrischer
+      Schriftgestaltung zu gewinnen und zu reflektieren.</p>
+    <div class="page-break"></div>
+    <p><b>Aufbau der Arbeit:</b> <br>
+      Kapitel Zwei führt in die theoretischen Grundlagen und den Kontext von Schriftprogrammen ein. Kapitel Drei widmet
+      sich historischen Systemen aus der Schriftgestaltung. Kapitel Vier behandelt explizit die
+      Geschichte und Funktionsweise von Metafont. Kapitel Fünf geht auf den heutigen stand der Dinge ein. Kapitel Sechs
+      dokumentiert die experimentelle Praxis und das gestalterische Projekt, zum Schluss fasst Kapitel Sieben die
+      Erkenntnisse zusammen und Kapitel Acht gibt einen Ausblick.</p>
+
+    <h2 id="2-kontext">2. Kontext Schriftprogramme</h2>
+    <p>Die Art wie Schriften produziert und gestaltet wurden, hat sich auch wie in vielen anderen kreativen Bereichen,
       immer gemeinsam mit dem Technologischen Fortschritt verändert. Dieser Wandel fand im letzten 150 Jahren besonderst
       schnell statt. Im 19. Jahrhundert bestimmten noch teure Bleisatz-Maschinen von Monotype oder Linotype das Handwerk
-      der Schriftgestaltung (vgl.p.98, ff), ein Handwerk, das nur wenigen Typographen zugänglich war (vgl.p.99, ff).
-      Durch Fotokompositions Maschienen wie der Digiset (1965) wurde das Gießen von Metallbuchstaben durch die
-      Belichtung optischer Konturen auf Licht-empfindliches Papier ersetzt (vgl.p.98). (Lehni, TF as a Programm)
-    </p>
-    <p>
-      Mit der digitalen Revolution erfolgte schließlich die Simulation dieser Prozesse in Software, zunächst auf
-      Großrechnern, später auf Heim-PCs, (wodurch das Gestalten von Fonts demokratisiert wurde (p.98,Abs.3)). Die
-      Software benutzt meist Metaphern aus der Schriftgestaltung die von der vorherigen Technologie übernommen wurden.
-      So stammt Beispielsweise das Wort “Font” von dem französischem Verb “fondre” was schmelzen oder gießen bedeutet
-      und auf die Herstellungsweise der Schriftarten in Gießereien verweist. Die Begriffe wurden übernommen, sie prägen
-      jedoch gleichzeitig auch unterbewusst die Art und Weise wie man mit Schrift arbeitet. So wurden digitale
-      Schriftzeichen weitgehend weiter als statische, quasi “fest gegossene” Form gedacht.
-    </p>
-    <p>
-      Obwohl digitale Schriftformate wie PostScript, Type 1 und OpenType programmierbar sind, beschreiben sie im Kern
+      der Schriftgestaltung,<sup id="fnref:2"><a href="#fn:2" role="doc-noteref">2</a></sup> ein Handwerk, das nur
+      wenigen Typographen zugänglich war.<sup id="fnref:3"><a href="#fn:3" role="doc-noteref">3</a></sup> Durch
+      Fotokompositions-Maschienen wie der Digiset (1965) wurde das Gießen von Metallbuchstaben durch die Belichtung
+      optischer Konturen auf Licht-empfindliches Papier ersetzt.<sup id="fnref:4"><a href="#fn:4"
+          role="doc-noteref">4</a></sup></p>
+    <p>Mit der digitalen Revolution erfolgte schließlich die Simulation dieser Prozesse in Software, zunächst auf
+      Großrechnern, später auf Heim-PCs, wodurch das Gestalten von Fonts demokratisiert wurde.<sup id="fnref:5"><a
+          href="#fn:5" role="doc-noteref">5</a></sup> Die Softwares benutzten meist Metaphern aus der Schriftgestaltung
+      die
+      von den vorherigen Technologien übernommen wurden. So stammt Beispielsweise das Wort <em>„Font“</em> von dem
+      französischem
+      Verb <em>„fondre“</em> ab, was schmelzen oder gießen bedeutet und auf die Herstellungsweise der Schriftarten in
+      Gießereien
+      verweist.<sup id="fnref:6"><a href="#fn:6" role="doc-noteref">6</a></sup> Die Begriffe wurden übernommen, sie
+      prägen jedoch gleichzeitig auch unterbewusst die Art und Weise wie man mit Schrift arbeitet. So wurden digitale
+      Schriftzeichen weitgehend weiter als statische, quasi <em>„fest gegossene“</em> Form gedacht.</p>
+    <p>Obwohl digitale Schriftformate wie PostScript, Type 1 und OpenType programmierbar sind, beschreiben sie im Kern
       nur geometrische Formen und Abstandsdaten, Schrift ist damit zwar technisch Software, wird jedoch weiterhin wie
       ein festes Objekt behandelt. Die eigentlichen Möglichkeiten von Software, Bedingungen zu formulieren, oder
       Variationen systematisch zu erzeugen, bleiben dabei aus. So kommt die Frage auf, könnte digitale Schrift die
-      Möglichkeiten von Software besser nutzen? (vgl.p.101-102). (Lehni, TF as a Programm)
-    </p>
+      Möglichkeiten von Software besser nutzen?<sup id="fnref:7"><a href="#fn:7" role="doc-noteref">7</a></sup> Kai
+      Bernau, Type-Design-Professor in Lausanne, sagt dazu im Rahmen des Beyond-Bézier-Projekts:</p>
+    <blockquote><em>„Maybe a font is more like raw material, an intermediate step that can be dropped into a piece of
+        software to work with.“<sup id="fnref:8"><a href="#fn:8" role="doc-noteref">8</a></sup></em></blockquote>
 
-    <h2 id="gerstner">2.1 Gerstner Parametrische Systeme im Design</h2>
-    <p>
-      Gestaltung kann nicht nur als das Entwerfen einzelner Formen verstanden werden, sondern auch als das Entwerfen von
-      Regeln und Programme, aus denen Formen entstehen können. Dieses Verständnis formulierte Karl Gerstner bereits 1965
-      in seinem Text Programme Entwerfen.
+    <h3 id="2-1-gerstner-parametrische-systeme-im-design">2.1 Gerstners Programme im Design</h3>
+    <p>Gestaltung kann über das Entwerfen einzelner Formen hinaus auch als das Entwerfen von Regeln und Programmen
+      verstanden werden, aus denen Formen entstehen. Dieses Verständnis formulierte Karl Gerstner bereits 1965 in seinem
+      Buch „Programme Entwerfen“. Der Begriff <em>„Programm“</em> bezeichnet bei Gerstner kein technisches
+      Computerprogramm wie wir
+      es kennen, sondern ein allgemein gültiges Gestaltungsprinzip, das insbesondere für die Typografie, aber auch für
+      den gesamten visuellen Bereich gilt.</p>
+    <blockquote><em>„Programme entwerfen meint ein allgemein gültiges Gestaltungsprinzip. Es gilt nicht nur für die
+        (dafür allerdings prädestinierte) Typographie [...]. Es gilt ohne Einschränkung im Bereich des Visuellen.“<sup
+          id="fnref:9"><a href="#fn:9" role="doc-noteref">9</a></sup></em></blockquote>
+    <p>Entwerfen bedeutet für Gerstner in diesem Sinne, relevante Parameter auszuwählen und in Beziehung zueinander zu
+      setzen.<sup id="fnref:10"><a href="#fn:10" role="doc-noteref">10</a></sup>
+      Als Technik für dieses systematische Entwerfen beschreibt er den sogenannten morphologischen Kasten, eine Methode,
+      die Fritz Zwicky aus der morphologischen Forschung entwickelt hat. Sie hilft auch dabei, komplexe gestalterische
+      Entscheidungen zu strukturieren. Anstatt eine Form direkt zu entwerfen, werden zunächst ihre wesentlichen Merkmale
+      in einzelne Parameter zerlegt. Diese Parameter können dann systematisch verändert und miteinander kombiniert
+      werden, sodass eine Vielzahl möglicher Lösungen sichtbar wird. Der morphologische Kasten unterstützt
+      Designer*innen dabei, nicht nur ein Ergebnis, sondern ein ganzes System von Lösungen zu erzeugen. Die Technik ist
+      bei weitem nicht perfekt und kann unvollkommene Lösungen liefern, weil die Möglichkeiten von vornherein durch die
+      gewählten Gestaltungsparameter begrenzt sind. Doch genau diese Arbeit am System selbst ist für Gerstner zentral:
     </p>
-    <blockquote>
-      <p>
-        “Programme entwerfen meint ein allgemein gültiges Gestaltungsprinzip. Es gilt nicht nur für die (dafür
-        allerdings prädestinierte) Typographie [...]. Es gilt ohne Einschränkung im Bereich des Visuellen.”
-      </p>
-      <p class="author">Programme Entwerfen, Karl Gerstner, p.18</p>
-    </blockquote>
-    <p>
-      Für Gerstner bezeichnet der Begriff „Programm“ kein technisches Werkzeug, sondern ein allgemeines
-      Gestaltungsprinzip, das insbesondere für die Typografie, aber auch für den gesamten visuellen Bereich gilt.
-      Entwerfen bedeutet in diesem Sinne, relevante Parameter auszuwählen und in Beziehung zueinander zu setzen. (vgl.
-      Programme Entwerfen, Karl Gerstner, p.13).
-    </p>
-    <p>
-      Als Technik für dieses systematische Entwerfen beschreibt Gerstner den sogenannten morphologischen Kasten, eine
-      Methode, die Fritz Zwicky aus der morphologischen Forschung entwickelt hat. Sie hilft auch dabei, komplexe
-      gestalterische Entscheidungen zu strukturieren. Anstatt eine Form direkt zu entwerfen, werden zunächst ihre
-      wesentlichen Merkmale in einzelne Parameter zerlegt. Diese Parameter können dann systematisch verändert und
-      miteinander kombiniert werden, sodass eine Vielzahl möglicher Lösungen sichtbar wird.
-    </p>
-    <p>
-      Der morphologische Kasten unterstützt Designer*innen dabei, nicht nur ein Ergebnis, sondern ein ganzes System von
-      Lösungen zu erzeugen. Die Technik ist bei weitem nicht perfekt und kann unvollkommene Lösungen liefern, weil die
-      Möglichkeiten von vornherein durch die gewählten Gestaltungsparameter begrenzt sind. Doch genau diese Arbeit am
-      System selbst ist für Gerstner zentral:
-    </p>
-    <blockquote class="pullquote">
-      <p>
-        “Aber gerade das Schema selbst zu entwerfen, die Vollkommenheit anzustreben, ist die Substanz der Arbeit”
-      </p>
-      <p class="author">Programme Entwerfen, Karl Gerstner, p.13</p>
-    </blockquote>
+    <blockquote><em>„Aber gerade das Schema selbst zu entwerfen, die Vollkommenheit anzustreben, ist die Substanz der
+        Arbeit.“<sup id="fnref:11"><a href="#fn:11" role="doc-noteref">11</a></sup></em></blockquote>
 
-    <h2 id="aktuelle-systeme">2.2 Aktuelle Systeme im Design</h2>
-    <p>
-      Während Gerstner die Programme noch als gedankliches Modell beschrieb, wird dieses Verständnis heute zur
-      praktischen Entwurfshaltung. Gestalter*innen nutzen Code, um eigene Werkzeuge zu entwickeln, Prozesse zu
-      strukturieren und Gestaltung als offenes System zu begreifen. Diese Perspektive prägt zahlreiche aktuelle
-      Positionen im Grafik- und Typedesign.
-    </p>
-    <p>
-      Jürg Lehni beobachtet, dass viele Designer*innen heute ein breiteres Verständnis von Programmierung und
-      systemischem Denken entwickeln, da Sie oft mit Softwaresystemen konfrontiert sind:
-    </p>
-    <blockquote>
-      <p>
-        “[..] you might perhaps tend to think more systematically. You do see more designers appropriating ideas related
-        to programming, but not necessarily becoming programmers.”
-      </p>
-      <p class="author">p. 264, Abs. 636</p>
+    <h3 id="2-2-aktuelle-systeme-im-design">2.2 Aktuelle Programme im Design</h3>
+    <p>Was Gerstner als gestalterisches Denkmodell beschrieb, wird heute zunehmend praktisch angewendet. Gestalter*innen
+      nutzen Code, um eigene Werkzeuge zu entwickeln, Prozesse zu strukturieren und Gestaltung als offenes System zu
+      begreifen. Diese Perspektive prägt zahlreiche aktuelle Positionen im Grafik- und Typedesign. Gestalter und
+      Softwareentwickler Jürg Lehni beobachtet, dass viele Designer*innen heute ein breiteres Verständnis
+      von Programmierung und systemischem Denken entwickeln, da Sie oft mit Softwaresystemen konfrontiert sind:</p>
+    <blockquote><em>„[...] you might perhaps tend to think more systematically. You do see more designers appropriating
+        ideas related to programming, but not necessarily becoming programmers.“<sup id="fnref:12"><a href="#fn:12"
+            role="doc-noteref">12</a></sup></em></blockquote>
+    <p>Damit rückt auch die Frage nach Werkzeuglogiken weiter ins Zentrum. Der Grafik- und Typedesigner, Petr van
+      Blokland kritisiert, dass gängige Software wie InDesign und Photoshop Gestaltung oft auf Ausführung reduziert,
+      anstatt neue Ideen zu ermöglichen, Er schreibt deshalb seine eigenen Programme:</p>
+    <blockquote><em>„[...] we need to make our own tools. [...] by the time I know what I’m doing, I have already
+        written a program that does it.“<sup id="fnref:13"><a href="#fn:13" role="doc-noteref">13</a></sup></em>
     </blockquote>
-    <p>
-      Damit rückt auch die Frage nach Werkzeuglogiken weiter ins Zentrum. Petr van Blokland kritisiert, dass gängige
-      Software wie InDesign und Photoshop Gestaltung oft auf Ausführung reduziert, anstatt neue Ideen zu ermöglichen, Er
-      schreibt deshalb seine eigenen Programme:
-    </p>
-    <blockquote>
-      <p>
-        “[...] we need to make our own tools. [...] by the time I know what I’m doing, I have already written a program
-        that does it.”
-      </p>
-      <p class="author">p.83 ,Abs. 110</p>
-    </blockquote>
-    <p>
-      Programmierung ermöglicht zusätzlich Entwurfsprozesse, die Überraschungen zulassen und Gestaltung als
-      ergebnisoffene Praxis begreifen. Gerade das Unvorhersehbare wird als kreatives Potenzial verstanden. Und das
-      ablegen von Kontrolle wird auch als wichtig wahrgenommen. Marianne Plano vom LUUSE kollektiv beschreibt:
-    </p>
-    <blockquote>
-      <p>
-        “There are contexts where bugs and errors are the most interesting part, and a lot of creativity can originate
-        from them.”
-      </p>
-      <p class="author">M.P, LUUSE, 2021, p. 292</p>
-    </blockquote>
-    <p>
-      Erik van Blokland beschreibt diesen Moment des Nicht-Wissens als produktiv:
-    </p>
-    <blockquote>
-      <p>
-        “you code without knowing exactly what the result might be, you generate stuff that surprises you. [...] the
-        result is almost always different from what I had imagined.”
-      </p>
-      <p class="author">p.72, Abs. 81</p>
-    </blockquote>
-    <p>
-      Das Projekt Beyond Bézier an der ECAL macht deutlich, wie notwendig es ist, über die konventionellen
-      Schriftgestaltungs-Tools hinwegzudenken, um neue Ausdrucksformen zu finden:
-    </p>
-    <blockquote>
-      <p>
-        “[...] the Beyond Bézier project was formulated as a critical investigation into the existing approaches to
-        letter drawing. [...] We are returning to the basic question of ‘How do we create?’ – and the answer to this we
-        hope to find in experimentation rather than in moving Bézier points around on a screen.”
-      </p>
-      <p class="author">ECAL MATD, 2021, https://beyondbezier.ch</p>
-    </blockquote>
-    <p>
-      Weiter heißt es dort:
-    </p>
-    <blockquote class="pullquote">
-      <p>
-        “questioning and reevaluating such standards is crucial to improving shared knowledge and moving forward.”
-      </p>
-      <p class="author">ECAL MATD, 2021, https://beyondbezier.ch</p>
-    </blockquote>
-    <p>
-      Sich von der Konvention zu lösen ist also ein wichtiger Schritt um voranzukommen. Meistens lohnt sich dabei auch
+    <p>Programmierung ermöglicht zusätzlich Entwurfsprozesse, die Überraschungen zulassen und Gestaltung als
+      ergebnisoffene Praxis begreifen. Gerade das Unvorhersehbare wird als kreatives Potenzial verstanden. Das Ablegen
+      von Kontrolle wird als wichtig wahrgenommen, wie Marianne Plano vom LUUSE-Kollektiv betont. Die Aktivitäten des
+      Kollektivs aus Brüssel zielen darauf ab, alternative Methoden des Editierens und Veröffentlichens zu entwickeln,
+      um damit die Open-Source-Kultur durch ihre physischen und digitalen Werkzeuge zu unterstützen.<sup
+        id="fnref:14"><a href="#fn:14" role="doc-noteref">14</a></sup> Plano beschreibt:
+    <blockquote><em>„There are contexts where bugs and errors are the most interesting part, and a lot of creativity can
+        originate from them.“<sup id="fnref:15"><a href="#fn:15" role="doc-noteref">15</a></sup></em></blockquote>
+    <p>Der Bruder von Petr, Erik van Blokland, ebenfalls Typedesigner und Programmierer, beschreibt diesen Moment des
+      Nicht-Wissens als produktiv:</p>
+    <blockquote><em>„you code without knowing exactly what the result might be, you generate stuff that surprises you.
+        [...] the result is almost always different from what I had imagined.“<sup id="fnref:16"><a href="#fn:16"
+            role="doc-noteref">16</a></sup></em></blockquote>
+    <p>Das Projekt Beyond Bézier an der ECAL macht deutlich, wie notwendig es ist, über die konventionellen
+      Schriftgestaltungs-Tools hinwegzudenken, um neue Ausdrucksformen zu finden:</p>
+    <blockquote><em>„[...] the Beyond Bézier project was formulated as a critical investigation into the existing
+        approaches to letter drawing. [...] We are returning to the basic question of ‘How do we create?’ – and the
+        answer to this we hope to find in experimentation rather than in moving Bézier points around on a screen.“<sup
+          id="fnref:17"><a href="#fn:17" role="doc-noteref">17</a></sup></em></blockquote>
+    <p>Weiter heißt es dort:</p>
+    <blockquote><em>„questioning and reevaluating such standards is crucial to improving shared knowledge and moving
+        forward.“<sup id="fnref:18"><a href="#fn:18" role="doc-noteref">18</a></sup></em></blockquote>
+    <p>Sich von der Konvention zu lösen ist also ein wichtiger Schritt um voranzukommen. Meistens lohnt sich dabei auch
       ein kleiner Blick zurück, weshalb im nächsten Kapitel erläutert wird, wie es zu diesem Standard kam und welche
-      verschiedenen Ansätze für digitale Schrift davor existierten.
-    </p>
+      verschiedenen Ansätze für digitale Schrift davor existierten.</p>
 
-    <h1 id="historischer-hintergrund">3. Historischer Hintergrund</h1>
-    <p>
-      Bevor sich mit PostScript und später OpenType ein einheitlicher Standard etablierte, existierten viele
+    <h2 id="3-historischer-hintergrund">3. Historischer Hintergrund</h2>
+    <p>Bevor sich mit PostScript und später OpenType ein einheitlicher Standard etablierte, existierten viele
       unterschiedlicher Ansätze, Schrift im Computer darzustellen und zu erzeugen. Diese frühen Systeme waren
       experimentell, oft instabil und technisch begrenzt. Sie zeigten jedoch alternative Denkweisen jenseits des
       heutigen Outline-Modells auf und machten sichtbar, dass digitale Schrift grundsätzlich auch anders gedacht werden
-      könnte.
-    </p>
-    <p>
-      Durch das aufkommen der ersten Computer und der Digitalisierung wandelte sich Schrift von einem physischen
-      Artefakt zu Information. Da Schrift nun nicht mehr als physisches Objekt, sondern als rechnerbasierte Beschreibung
-      vorlag, war diese auch stark an ihre spezifische technische Umgebungen gebunden. Dies erschwehrte die Speicherung
-      und Wiederverwendbarkeit der erzeugten Ergebnisse. Viele frühe Schrift-Systeme konnten sich nicht durchsetzen. In
-      den meisten Fällen ist heute nicht mehr eindeutig nachvollziehbar, ob oder wie ein System tatsächlich
-      funktionierte. (Vgl: Automatic Type Talk) Einige dieser frühen Ansätze wurden glücklicherweise von Lynn Ruggles in
-      ihrem Paper “Letterform Design Systems” (1983) dokumentiert. Insgesamt zeigt diese experimentelle Phase vor
-      PostScript eine bemerkenswerte Vielfalt an Ideen.
-    </p>
-    <p>
-      Zu den frühen parametrischen Ansätzen zählt ITSLF (Interactive Synthesizer of LetterForms, 1968, von Mergler und
-      Vargo), das Buchstaben mit Hilfe von Superellipsen und einem parametrischen Skelett beschrieb. Also quasi ein
-      Vorläufer von Donald Knuths Metafont. (vgl. p.38, prehistory of digital fonts)
-    </p>
-    <p>
-      Ein weiteres parametrisches System war CSD (Character Simulated Design) von Philippe Coueignoux (1973), das
+      könnte.<sup id="fnref:19"><a href="#fn:19" role="doc-noteref">19</a></sup></p>
+    <p>Durch das aufkommen der ersten Computer und der Digitalisierung wandelte sich Schrift von einem physischen
+      Artefakt zur Information. Da Schrift nun nicht mehr als physisches Objekt, sondern als rechnerbasierte
+      Beschreibung vorlag, war diese auch stark an ihre spezifische technische Umgebungen gebunden. Dies erschwehrte die
+      Speicherung und Wiederverwendbarkeit der erzeugten Ergebnisse. Viele frühe Schrift-Systeme konnten sich nicht
+      durchsetzen. In den meisten Fällen ist heute nicht mehr eindeutig nachvollziehbar, ob oder wie ein System
+      tatsächlich funktionierte.<sup id="fnref:20"><a href="#fn:20" role="doc-noteref">20</a></sup> Einige dieser frühen
+      Ansätze wurden glücklicherweise von Lynn Ruggles in ihrem Paper „Letterform Design Systems“ (1983) dokumentiert.
+      Insgesamt zeigt diese experimentelle Phase vor PostScript eine bemerkenswerte Vielfalt an Ideen.</p>
+    <p>Eines der frühesten Systeme, das speziell für Schriftarten entwickelt wurden war ITSLF (Interactive Synthesizer
+      of LetterForms)<span class="sidenote-marker">Abb. 1</span>, von Mergler und Vargo
+      (1968)<sup id="fnref:21"><a href="#fn:21" role="doc-noteref">21</a></sup>.
+      Ein System, indem Buchstaben mit Hilfe von Superellipsen und einem parametrischen Skelett beschrieben wurden.<sup
+        id="fnref:22"><a href="#fn:22" role="doc-noteref">22</a></sup> Also quasi ein Vorläufer von Donald Knuths
+      Metafont. Ein weiteres parametrisches System war CSD (Character
+      Simulated Design)<span class="sidenote-marker">Abb. 2</span>, von Philippe Coueignoux
+      (1973), das
       Konturen mit Hilfe von mathematischen und grammatikalischen Strukturen erzeugte. Beide Systeme blieben
-      prototypisch, zeigen aber, dass die Idee der parametrischen Schriftgenerierung bereits vor Knuths Metafont
-      existierte.
+      prototypisch, zeigen aber, dass die Idee der parametrischen Schriftgenerierung bereits vor Metafont
+      existierte.<sup id="fnref:23"><a href="#fn:23" role="doc-noteref">23</a></sup>
     </p>
-    <p>
-      Parallel entwickelten sich industrielle Systeme wie Ikarus (URW, 1973), das bestehende Schriftzeichnungen
-      digitalisierte und in mathematische Konturen (Splines) umwandelte, sowie die frühen Bitmap-basierten Systeme für
-      CRT-Bildschirme und Fotobelichter, die Schrift als Pixelraster speicherten und an die niedrigen Auflösungen
-      anpassten (z. B. die Digiset-Schriften von Rudolf Hell). (vgl. p.40, prehistory of digital fonts)
-    </p>
-    <p>
-      Es gab viele spannende Ansätze, und durch einen langsamen Prozess der Auswahl und Weiterentwicklung wurden einige
-      verworfen, während sich andere zusammenfanden und zu Standards entwickelten. Am Ende dieses Prozesses konzentriert
+        <span class="sidenote">
+        <span class="figure-sidenote">
+          <img src="Abbildungen/ITSLF.png" alt="ITSLF Variationen">
+          <span class="figure-caption">Abb. 1: ITSLF, Variationen von Buchstabe E</span>
+        </span>
+        <span class="figure-sidenote">
+          <img src="Abbildungen/CSD-5.png" alt="CSD System Output">
+          <span class="figure-caption">Abb. 2: CSD, Kegelschnitte für
+            Kurven (Oben),<br> Beispiel wie Parameter einen Buchstaben bilden (Mitte).</span>
+        </span>
+      </span>
+
+
+ <div class="page-break"></div>
+<span class="sidenote">
+        <span class="figure-sidenote">
+          <img src="Abbildungen/US4630309-drawings-page-8.png" alt="Patent US4630309 Drawing 8">
+          <span class="figure-caption">Abb. 3: Ikarus Patent Zeichnung</span>
+        </span>
+        <span class="figure-sidenote">
+          <img src="Abbildungen/Metafont_Yannis.png"
+            alt="Metafont Funktion">
+          <span class="figure-caption">Abb. 4: Metafont Funktion ab 1984</span>
+        </span>
+      </span>
+    <p>Parallel entwickelten sich industrielle Systeme wie Ikarus von URW (1973)<span class="sidenote-marker">Abb.
+        3</span>, das bestehende Schriftzeichnungen reproduzierte, digitalisierte und in mathematische Konturen,
+      sogenannte Splines umwandelte, sowie die frühen
+      Bitmap-basierten
+      Systeme für CRT-Bildschirme und Fotobelichter, die Schrift als Pixelraster speicherten und an die niedrigen
+      Auflösungen anpassten z. B. die Digiset-Schriften von Rudolf Hell.<sup id="fnref:24"><a href="#fn:24"
+          role="doc-noteref">24</a></sup> Es gab viele spannende Ansätze, und durch einen langsamen Prozess der Auswahl
+      und Weiterentwicklung wurden einige verworfen, während sich andere zusammenfanden und zu Standards entwickelten.
+      Am Ende dieses Prozesses konzentriert
       sich die gesamte Branche im Wesentlichen auf ein einziges System: OpenType, ein Standard, der von Microsoft
-      gemeinsam mit Adobe Systems entwickelt wurde, als Ergebnis des sogenannten „Font Wars“ zwischen Apples TrueType
-      und Adobes PostScript.
+      gemeinsam mit Adobe Systems entwickelt wurde, als Ergebnis des sogenannten „Font Wars„ zwischen Apples TrueType
+      und Adobes PostScript.<sup id="fnref:25"><a href="#fn:25" role="doc-noteref">25</a></sup>
     </p>
-    <p>
-      Gleichzeitig existiert bis heute eine vergleichsweise kleine, aber stabile Nische, in der alternative Systeme
+    <p>Gleichzeitig existiert bis heute eine vergleichsweise kleine, aber stabile Nische, in der alternative Systeme
       genutzt werden. Dazu zählt das Textsatzsystem TeX mit seinem Ablegerprojekt LaTeX, sowie das dazugehörige
       Schriftsystem METAFONT, das vor allem in wissenschaftlichen Kontexten, insbesondere in der Mathematik, Informatik
-      und Physik Verwendung findet. METAFONT ist im zeitgenössischen Typedesign weitgehend unbekannt, bietet jedoch
+      und Physik Verwendung findet.<sup id="fnref:26"><a href="#fn:26" role="doc-noteref">26</a></sup> METAFONT<span
+        class="sidenote-marker">Abb. 4</span>
+       ist im zeitgenössischen Typedesign weitgehend unbekannt, bietet jedoch
       durch seinen parametrischen Ansatz wichtige Ausgangspunkt für aktuelle experimentelle Ansätze im Schriftentwurf
       sowie für die vorliegende Arbeit. Daher wird im folgenden Kapitel die Entstehungsgeschichte und Funktionsweise von
       Metafont beschrieben.
-      (vgl. Typeface as a programm, p. 103, Abs.1)
     </p>
-
-    <h1 id="metafont">4. METAFONT</h1>
-    <p>
-      Metafont sowie TeX entstanden tatsächlich aus einer tiefen Unzufriedenheit von Donald Knuth, dem Autor des
-      mehrbändigen “The Art of Computer Programming”. Für Knuth war die visuelle Präzision seiner Texte ebenso wichtig
-      wie deren Inhalt. Als frühere Bände noch auf mechanischen Bleisatzmaschinen gesetzt wurden, entsprach das Ergebnis
-      seinen Ansprüchen. Dies änderte sich jedoch grundlegend, als neue Bände mit dem optischen Fotosatzsystemen gestzt
-      wurden, weil damals finanzielle Mittel fehlten um das teure Bleisatz-verfahren weiter zu verwenden. (vgl.p. 343
-      Mathematical Typography) (TF as a Programm p.103)
-    </p>
-    <p>
-      Die neuen digitalen Schriften wirkten für Knuth minderwertig und beliebig. Typografie war für ihn kein
-      nebensächliches Mittel, sondern wichtiger Bestandteil seiner wissenschaftlichen Arbeiten. (“Ink running through
-      his veins”)
-    </p>
-    <p>
-      So entschloss er sich im Sommer 1977, das Problem selber anzugehen. Er wusste nicht direkt wie er starten soll und
-      das Konzept seiner METAFONT kam erst nach dem gescheiterten Versuchen die Monotype Modern Schriften zu
+    <div class="page-break"></div>
+    <h2 id="4-metafont">4.Metafont</h2>
+    <p>METAFONT sowie TeX entstanden tatsächlich aus einer tiefen Unzufriedenheit von Donald Knuth, dem Autor des
+      bekannten mehrbändigen „The Art of Computer Programming“. Für den Mathematiker und Informatiker Donald Knuth war
+      die visuelle Präzision seiner Texte ebenso wichtig wie deren Inhalt. Als frühere Bände noch auf mechanischen
+      Bleisatzmaschinen
+      gesetzt wurden, entsprach das Ergebnis seinen Ansprüchen. Dies änderte sich jedoch grundlegend, als neue Bände mit
+      dem optischen Fotosatzsystemen gesetzt wurden, weil damals finanzielle Mittel fehlten um das teure
+      Bleisatz-Verfahren weiter zu verwenden.<sup id="fnref:27"><a href="#fn:27" role="doc-noteref">27</a></sup><sup
+        id="fnref:28">/<a href="#fn:28" role="doc-noteref">27</a></sup> Die neuen digitalen Schriften wirkten für Knuth
+      minderwertig und beliebig. Typografie war für Knuth kein nebensächliches Mittel, sondern wichtiger Bestandteil
+      seiner wissenschaftlichen Arbeiten.</p>
+    <p>So entschloss er sich im Sommer 1977, das Problem selber anzugehen. Er wusste nicht direkt wie er starten soll
+      und das Konzept seiner METAFONT kam erst nach dem gescheiterten Versuchen die Monotype Modern Schriften zu
       digitalisieren. Erst experimentierte Er mit Fernsehkameras, was aufgrund von Verzerrungen und Lichtempfindlichkeit
       scheiterte. Dann projizierte er Buchstaben groß an eine Wand und skizzierte die unscharfen Umrisse per Hand.
       Während dieser Skizzen kam ihm die zentrale Idee. Er wollte nicht einfach Formen kopieren, sondern die
       dahinterstehende gestalterische Absicht erfassen und in ein Computerprogramm bringen. Daraus entstand das Konzept
-      von METAFONT: Buchstaben als mathematische Konstruktionen mit variablen Parametern zu beschrieben. (vgl p.39
-      Lessons learned from Metafont)
-    </p>
-    <blockquote>
-      <p>
-        “It suddenly dawned on me that I should not simply try to copy the shapes. A human being had originally drawn
-        them, so I really wanted to learn as much as possible about what was in that person’s mind at the time, and I
-        wanted to incorporate that knowledge into a computer program.”
-      </p>
-      <p class="author">p.39 Lessons learned from Metafont</p>
-    </blockquote>
-    <p>
-      Knuth begreift den Computer als eigenständiges Medium für die Erzeugung von Buchstaben durch parametrische
-      Formeln, anstatt den Computer nur als Simulations Medium vorheriger Technologien zu nutzen:
-    </p>
-    <blockquote>
-      <p>
-        “One of the first important things that I learned was that the computer deserves to be treated as a new medium.
-        When we approach the problem of digital type design, we should not expect to do everything exactly as it was
-        done before; we should rather expect that we can learn to guide a computer as people have traditionally learned
-        to guide a brush or a chisel. “
-      </p>
-      <p class="author">p.42 lessons learned</p>
-    </blockquote>
-    <p>
-      Aus dieser Erkenntnis entstanden die 3 P’s von Metafont: “drawing with pens and parameters via programs” (Lessons
-      Learned p.39). Die Grundfunktion von Metafont verfolgt einen kalligraphischen anstatt “zeichnerischem” Ansatz. Man
-      „zeichnet“ die Buchstaben nicht mehr als Umriss, sondern beschreibt, wie sie „geschrieben“ werden sollen. Ein paar
-      Koordinaten-Punkte definieren die Skelettform eines Buchstaben, und ein virtueller Stift fährt diese Grundform ab.
-      Verändert man die Beziehung der Koordinaten-Punkte oder die Stiftform, verändert dies automatisch jede Glyphe in
-      dem System. Daher auch der Name einer Meta-Font, denn die gesamte Familie von Glyphen (verschiedene Schnitte,
-      Stile usw.) wird in einem einzigen Modell zusammenfasst. (Meta=höhere Ebene) (vgl. lessons learned from mf, p.38)
-    </p>
-    <p>
-      Knuth veröffentlichte die erste Version von Metafont 1979, mit der Hilfe von bekannten Typographen wie Charles
-      Bigelow, Matthew Carter, Kris Holmes, Richard Southall und Herman Zapf. Ziel war es, verschiedene Bitmap-Schriften
+      von METAFONT: Buchstaben als mathematische Konstruktionen mit variablen Parametern zu beschrieben.<sup
+        id="fnref:29"><a href="#fn:29" role="doc-noteref">29</a></sup></p>
+    <blockquote><em>„It suddenly dawned on me that I should not simply try to copy the shapes. A human being had
+        originally drawn them, so I really wanted to learn as much as possible about what was in that person’s mind at
+        the time, and I wanted to incorporate that knowledge into a computer program.“<sup id="fnref:30"><a
+            href="#fn:30" role="doc-noteref">30</a></sup></em></blockquote>
+    <p>Knuth begreift den Computer als eigenständiges Medium für die Erzeugung von Buchstaben durch parametrische
+      Formeln, anstatt den Computer nur als Simulations Medium vorheriger Technologien zu nutzen:</p>
+    <blockquote><em>„One of the first important things that I learned was that the computer deserves to be treated as a
+        new medium. When we approach the problem of digital type design, we should not expect to do everything exactly
+        as it was done before; we should rather expect that we can learn to guide a computer as people have
+        traditionally learned to guide a brush or a chisel.“<sup id="fnref:31"><a href="#fn:31"
+            role="doc-noteref">31</a></sup></em></blockquote>
+    <p>Aus dieser Erkenntnis entstanden die 3 P’s von Metafont: <em>„drawing with pens and parameters via programs“.<sup
+          id="fnref:32"><a href="#fn:32" role="doc-noteref">32</a></sup></em> Die Grundfunktion von Metafont verfolgt
+      einen kalligraphischen anstatt <em>„zeichnerischem“</em> Ansatz. Man <em>„zeichnet“</em> die Buchstaben nicht mehr
+      als Umriss,
+      sondern beschreibt, wie sie <em>„geschrieben“</em> werden sollen. Ein paar Koordinaten-Punkte definieren die
+      Skelettform
+      eines Buchstaben, und ein virtueller Stift fährt diese Grundform ab. Verändert man die Beziehung der
+      Koordinaten-Punkte oder die Stiftform, verändert dies automatisch jede Glyphe in dem System.<sup id="fnref:33"><a
+          href="#fn:33" role="doc-noteref">33</a></sup> Daher auch der Name
+      einer <em>Meta-Font</em>, denn die gesamte Familie von Glyphen, verschiedene Schnitte, Stile usw. wird in einem
+      einzigen
+      Modell zusammenfasst.</p>
+    <p>Knuth veröffentlichte die erste Version von Metafont 1979, mit der Hilfe von bekannten Typographen wie Charles
+      Bigelow, Matthew Carter, Kris Holmes, Richard Southall und Herman Zapf.<sup id="fnref:34"><a href="#fn:34"
+          role="doc-noteref">34</a></sup> Ziel war es, verschiedene Bitmap-Schriften
       zu erzeugen für verschiedene Größen und Stile durch parametrische Variation. Diese Idee der automatischen
       Variation kam aus der Beobachtung, dass im Bleisatz Buchstaben für jede Schriftgröße spezifisch angepasst wurden,
       etwa in Kontrast, Strichstärke oder x-Höhe. Knuth entnahm daraus, dass eine Schrift, die in ihrer eigenen inneren
       Logik formuliert ist, viel leichter für verschiedene Größen optimiert werden könnte und so höchste Qualität und
-      gleichzeitig typografische Tradition bewahren würde. Diese erste Version war eine Art Prototyp und dadurch schwer
-      zu bedienen (vgl. prehistory of digital fonts p. 42–43).
+      gleichzeitig typografische Tradition bewahren würde.<sup id="fnref:35"><a href="#fn:35"
+          role="doc-noteref">35</a></sup> Diese erste Version war eine Art Prototyp und dadurch schwer
+      zu bedienen, sie verfolgte einen naiven Ansatz, denn Variationen in der
+      Stiftrotation sowie der Stiftbreite entlang des Skelett-Pfads waren damals noch nicht möglich.
+      Darauf folgte 1984 eine überarbeitete Version von Metafont, welche diese Details berücksichtigte. Buchstaben,
+      beziehungsweise einzelne Komponente können nun zusätzlich auch als Umrisse mit Bézier-Kurven gezeichnet werden.
+      Ein Jahr später wurde die bekannteste Metafont-Schrift „Computer-Modern“ veröffentlicht. Diese Schrift verfügt
+      insgesamt über 62
+      steuerbare Parameter, wodurch sie sich in vielen Feinheiten umformen lässt.<sup id="fnref:36"><a href="#fn:36"
+          role="doc-noteref">36</a></sup></p>
+    <blockquote><em>„I realize now that I was extremely naive in 1977 when I believed that the edges
+        would take care of themselves if I simply drew with a pen that had the right shape. On the other hand, we are
+        not abandoning the pen metaphor, because it gives the correct „first-order“ insights about how letters are
+        drawn; the edge details are important second-order corrections that refine the designs, but they should not
+        distract us from the chief characteristics of the forms.“<sup id="fnref:37"><a href="#fn:37"
+            role="doc-noteref">37</a></sup></em></blockquote>
+
+    <h3 id="4-1-warum-metafont-scheiterte">4.1 Warum Metafont scheiterte</h3>
+    <p>Obwohl Metafont einen interessanten alternativen Ansatz bot, wurde es damals in der Schriftgestaltungsszene nicht
+      besonders ernst genommen, was man auch anhand von Reaktionen zu „The Concept of a Meta-Font“ sehen kann:</p>
+    <blockquote><em>„The concept of the Meta-Font attacks all the sensibilities of professionals who work with type.“
+        –Gary Gore <br><br>
+        „The result is not pleasant to look at. Nor is it intended to please the eye.“ –Fernand Baudin <br><br>
+        „The typefaces used by Donald Knuth are ugly and seem amateurishly rendered — at least they seem that way to
+        me.“ –David Ford <br><br>
+        „Besides being a designer, I have no objection to act as a systems operator, but I don’t want to become a
+        programmer - even less a parameterizer.“ –Gerard Unger<sup id="fnref:38"><a href="#fn:38"
+            role="doc-noteref">38</a></sup></em></blockquote>
+    <p>Die funktionsweise von Metafont und Software allgemein ist ziemlich abstrakt und logisch. Menschen die sich in
+      Software vertiefen können, denken meist auch in abstrakter und logischer Weise, doch Design ist mehr emotional als
+      logisch. Die klassische Outline Methode ist direkter und ermöglicht
+      eine instinktivere Arbeitsweise. Die Arbeit mit dem Schriftsatzsystem TeX sowie METAFONT involviert einen langen
+      Prozess. Mehrere Programme mussten durchlaufen werden um eine Grafik zu erzeugen und diese anzuzeigen.<sup
+        id="fnref:39"><a href="#fn:39" role="doc-noteref">39</a></sup></p>
+    <blockquote><em>„lnteraction with the system can be slow because the system is declarative rather than interactive,
+        requiring the designer to first create the METAFONT containing a mathematical specification of the letterforms,
+        and then to run the METAFONT system with the letterform program.“<sup id="fnref:40"><a href="#fn:40"
+            role="doc-noteref">40</a></sup></em></blockquote>
+    <p>Hätte es damals so etwas wie ein graphisches user interface gegeben um Metafont code schneller zu visualisieren,
+      wären manche Schriftgestalter*innen die intuitiv und reaktiv arbeiten weniger gehemmt gewesen, und Metafont hätte
+      sich stärker verbreitet.</p>
+
+    <h2 id="5-wiederentdeckung-parametrischer-gestaltung">5. Parametrische Gestaltung Heute</h2>
+    <p>Die Funktionsweise von Metafont war ihrer Zeit voraus und ist auch 40 Jahre später noch relevant, da sie die
+      Grundlage für eine parametrische Gestaltung von Schrift liefert. Einige zeitgenössische Projekte
+      greifen das METAFONT-System direkt wieder auf und führen uns vor Augen, welches Potenzial in diesem Ansatz
+      steckte, und regen damit zum Nachdenken über heutige Gestaltungswerkzeuge an. Beispiele hierfür sind
+      „MTDBT2F4D“<span class="sidenote-marker">Abb. 5</span>
+      von Dexter Sinister (2012),<sup id="fnref:41"><a href="#fn:41" role="doc-noteref">41</a></sup> „Metaflop“<span
+        class="sidenote-marker">Abb. 6</span> von
+      Alexis Reigel und Marco Müller (2012–2025),<sup id="fnref:42"><a href="#fn:42" role="doc-noteref">42</a></sup> der
+      „Plancton-Editor„ vom Luuse-Kollektiv (2022),<sup id="fnref:43"><a href="#fn:43" role="doc-noteref">43</a></sup>
+      sowie die „Metapost Sandbox" von Santhosh Thottingal (2025).<sup id="fnref:44"><a href="#fn:44"
+          role="doc-noteref">44</a></sup> Auch in diesem Projekt steckt der selbe Gedanke.
     </p>
-    <p>
-      Warum sich METAFONT nicht durchsetzte: Die funktionsweise von Metafont und Software allgemein ist ziemlich
-      abstrakt und logisch. Menschen die sich in Software vertiefen können, denken meist auch in abstrakter und
-      logischer Weise. (Promethisches Temperamet) Doch Design ist mehr emotional als logisch. Die klassische Outline
-      Methode ist direkter und ermöglicht eine instinktivere Arbeitsweise. Die Arbeit mit dem Schriftsatzsystem TEX
-      sowie METAFONT involviert einen langen Prozess. Mehrere Programme mussten durchlaufen werden um eine Grafik zu
-      erzeugen und diese anzuzeigen. (vgl. Dave Crossland, Why didn’t MF catch on?)
-    </p>
-    <blockquote>
-      <p>
-        “lnteraction with the system can be slow because the system is declarative rather than interactive, requiring
-        the designer to first create the METAFONT containing a mathematical specification of the letterforms, and then
-        to run the METAFONT system with the letterform program.”
-      </p>
-      <p class="author">p. 16, Letterform Design Systems</p>
-    </blockquote>
-    <p>
-      Hätte es damals so etwas wie ein graphisches user interface (GUI) gegeben um Metafont code schneller zu
-      visualisieren, wären manche Schriftgestalter*innen die intuitiv und reaktiv arbeiten weniger gehemmt gewesen, und
-      Metafont hätte sich stärker verbreitet.
+  <span class="sidenote">
+        <span class="figure-sidenote" id="fig-5">
+          <img src="Abbildungen/Kadist.png" alt="KADIST logo 2013-2022">
+          <span class="figure-caption">Abb. 5: KADIST logo 2013-2022</span>
+        </span>
+        <span class="figure-sidenote">
+          <img src="Abbildungen/Metaflops.png" alt="Metaflop Modelle">
+          <span class="figure-caption">Abb. 6: Metaflop</span>
+        </span>
+      </span>
+    <div class="page-break"></div>
+    <p>Andere Projekte mit skriptbasierten Schriften wie, „Calligrapher“ von Jürg Lehni und François Rappo (2006), „Type
+      Generator“ von Remo Caminada und Ludovic Varone (2007), „Prototypo“ von Yannick Mathey (2009)<sup id="fnref:45"><a
+          href="#fn:45" role="doc-noteref">45</a></sup>, „Letterspecies“ <span class="sidenote-marker">Abb. 7</span> von Fábio Pereira und Tiago Martins (2019)<sup id="fnref:46"><a href="#fn:46" role="doc-noteref">46</a></sup>,
+      „LTTR/INK“ von Filip Paldia, Martin Cetkovsky und
+      Matus Zdansky (2022)<sup id="fnref:47"><a href="#fn:47" role="doc-noteref">47</a></sup> oder „Burrowlab“<span class="sidenote-marker">Abb. 8</span> von Phillip
+      Koller (2022)<sup id="fnref:48"><a href="#fn:48" role="doc-noteref">48</a></sup> folgen ähnlichen Ansätzen. Sie zeigen, wie Knuths Denkweise noch immer Impulse für neue, flexible und kreative Schriftgestaltung geben kann, wenn sie nur leichter zugänglich wäre.    
+      <span class="sidenote">
+        <span class="figure-sidenote">
+          <img src="Abbildungen/Letterspecies.png" alt="Letterspecies interface">
+          <span class="figure-caption">Abb. 7: Letterspecies</span>
+        </span>
+        <span class="figure-sidenote">
+          <img src="Abbildungen/Burrowlab.png" alt="Burrowlab output">
+          <span class="figure-caption">Abb. 8: Burrowlab</span>
+        </span>
+      </span>
     </p>
 
-    <h1 id="wiederentdeckung">5. Wiederentdeckung Parametrischer Gestaltung</h1>
-    <p>
-      Die Funktionsweise von Metafont war ihrer Zeit voraus und ist auch 30 Jahre später noch relevant, da sie die
-      Grundlage für eine parametrische, anpassbare Gestaltung von Schrift liefert. Einige zeitgenössische Projekte
-      greifen das METAFONT-System wieder auf und führen uns vor Augen, welches Potenzial in diesem Ansatz steckte, und
-      regen damit zum Nachdenken über heutige Gestaltungswerkzeuge an. Beispiele hierfür sind „MTDBT2F4D“ von Dexter
-      Sinister (2012), „Metaflop“ von Alexis Reigel und Marco Müller (2012–2025), der „Plancton-Editor“ vom
-      Luuse-Kollektiv (2022), sowie die “Metapost Sandbox” von Santhosh Thottingal (2025). Auch in diesem Projekt steckt
-      der selbe Gedanke.
-    </p>
-    <p>
-      Andere aktuelle Experimente mit skriptbasierten Schriften wie, Calligrapher von Jürg Lehni und François Rappo
-      (2006), Type Generator von Remo Caminada und Ludovic Varone (2007), Prototypo von Yannick Mathey (2009),
-      “Letterspecies” von Fábio Pereira und Tiago Martins (2019), LTTR/INK von Filip Paldia, Martin Cetkovsky und Matus
-      Zdansky (2022) oder Burrowlab von Phillip Koller (2022) folgen ähnlichen Ansätzen. Sie zeigen, wie Knuths
-      Denkweise noch immer Impulse für neue, flexible und kreative Schriftgestaltung geben kann, wenn sie leichter
-      zugänglich wäre. (vgl. TF as a Programm, p. 108)
-    </p>
+    <h3 id="5-1-zugang-und-offenheit">5.1 Zugang und Offenheit</h3>
+    <p>Programmieren ist heute zum Glück zugänglicher denn je. Mit der Hilfe von künstlicher Intelligenz, lassen sich
+      komplizierte Code-Strukturen auseinander nehmen und somit besser nachvollziehen. Dadurch erscheint die Lernkurve
+      etwas flacher zu werden. Zusätzlich veröffentlichen viele Gestalter*innen und Unternehmen ihre entwickelten Tools
+      und Schriften unter Open-Source-Lizenzen wie zum Beispiel der GNU GPL 3,<sup id="fnref:49"><a href="#fn:49"
+          role="doc-noteref">49</a></sup> die sicherstellt, dass Software frei geteilt und verändert werden darf. Dies
+      Förderdert Gemeinschaft und Transparenz. Die verpflichtende Offenlegung des Quellcodes ermöglicht jungen
+      Gestalter*innen die Zusammenarbeit und unterstützt letztendlich Innovation.</p>
 
-    <h2 id="generatives-design">5.1 Generatives Design Heute</h2>
-    <p>
-      Programmieren ist heute zugänglicher denn je. Mit der Hilfe von künstlicher Intelligenz, lassen sich komplizierte
-      Code-Strukturen auseinander nehmen und somit besser nachvollziehen. Dadurch erscheint die Lernkurve etwas flacher
-      zu werden. Zusätzlich veröffentlichen viele Gestalter*innen und Unternehmen ihre entwickelten Tools und Schriften
-      unter der Open-Source-Lizenz. Dies ermöglicht jungen Gestalter*innen den Austausch von Wissen und Resourcen.
-    </p>
-
-    <h2 id="open-source-kultur">5.2 Open-Source-Kultur – Überblick</h2>
-    <p>
-      Die Idee von Open Source stammt ursprünglich aus der Wissenschaft. Wissen sollte frei zugänglich sein, damit
-      andere Wissenschaftler/innen darauf aufbauen können. Da die Informatik in wissenschaftlichen Laboren entstand, ist
-      diese Denkweise auch in viele der ersten Computerentwicklungen eingeflossen. (METAFONT und LATEX) Dieses Prinzip
-      bedeutet mehr Zugang statt Exklusivität. Werkzeuge, Methoden und Ergebnisse gehören nicht einer Person, sondern
-      können gemeinsam genutzt und verbessert werden. Dadurch entsteht ein Raum, in dem Neues ausprobiert werden kann,
-      ohne hohe Hürden, ohne teure Lizenzen, ohne geschlossene Systeme.
-    </p>
-    <p>
-      Mit dem Aufstieg großer Technologie-Unternehmen in den 80er Jahren änderte sich jedoch vieles. Firmen nutzten zwar
-      offene Technologien als Grundlage, begannen aber gleichzeitig, ihre Produkte abzuschotten, um damit Geld zu
+    <h3 id="5-2-open-source-kultur-berblick">5.2 Überblick Open-Source-Kultur</h3>
+    <p>Die Idee von Open Source stammt ursprünglich aus der Wissenschaft. Wissen sollte frei zugänglich sein, damit
+      andere Wissenschaftler*innen darauf aufbauen können. Da die Informatik in wissenschaftlichen Laboren entstand, ist
+      diese Denkweise auch in viele der ersten Computerprogramme eingeflossen. Dieses Prinzip bedeutet mehr Zugang
+      statt Exklusivität.<sup id="fnref:50"><a href="#fn:50" role="doc-noteref">50</a></sup> Werkzeuge, Methoden und
+      Ergebnisse gehören nicht einer Person, sondern können gemeinsam
+      genutzt und verbessert werden. Dadurch entsteht ein Raum, in dem Neues ausprobiert werden kann, ohne Hürden, durch
+      teure Lizenzen oder geschlossene Systeme.</p>
+    <p>Mit dem Aufstieg großer Technologie-Unternehmen in den 80er Jahren änderte sich jedoch vieles. Firmen nutzten
+      zwar offene Technologien als Grundlage, begannen aber gleichzeitig, ihre Produkte abzuschotten, um damit Geld zu
       verdienen. So wurde aus einer Gemeinschaftsidee ein Teil des kapitalistischen Marktes. Open-Source-Projekte
       existieren zwar weiterhin, und auch stärker als zuvor, doch sie bewegen sich heute mehr in einem Spannungsfeld
-      zwischen gemeinschaftlichem Wissen und wirtschaftlichen Interessen.
-    </p>
-    <p>
-      In der Schriftgestaltung ist ein Wandel zu beobachten. Frei verfügbare Schriften galten lange als technisch und
+      zwischen gemeinschaftlichem Wissen und wirtschaftlichen Interessen.<sup id="fnref:51"><a href="#fn:51"
+          role="doc-noteref">51</a></sup></p>
+    <p>In der Schriftgestaltung ist ein Wandel zu beobachten. Frei verfügbare Schriften galten lange als technisch und
       gestalterisch minderwertig und fanden kaum Verwendung. Die Platform Velvetyne, entstand 2011 als Reaktion auf die
       stark traditionelle Schriftgestaltung. Ziel war es, freie Schriften als Experimentierfeld zu sehen und jungen
       Designer*innen eine Plattform zu bieten. Dabei wurden Fehler und Lücken nicht als Schwächen, sondern als
       Ausgangspunkte für kreative Entwicklungen und Inspiration gesehen. Die ersten Nutzer*innen von Velvetyne-Fonts,
       meist Studierende und Non-Profits, wurden von den unkonventionellen Formen und Konzepten angezogen. Jeder konnte
-      Beiträge leisten, Schriften verbessern oder weiterentwickeln, wodurch ein dynamisches, offenes Netzwerk entstand.
-      (vgl. p.86-92, TYPEONE #10, Velvetyne, September 2025, TYPE01 (UK))
-    </p>
-    <p>
-      Im Vergleich zu Donald Knuths Zeit wirkt das heute anders. Als Knuth Metafont entwickelte, war Offenheit
+      Beiträge leisten, Schriften verbessern oder weiterentwickeln, wodurch ein dynamisches, offenes Netzwerk
+      entstand.<sup id="fnref:52"><a href="#fn:52" role="doc-noteref">52</a></sup></p>
+    <p>Im Vergleich zu Donald Knuths Zeit wirkt das heute anders. Als Knuth Metafont entwickelte, war Offenheit
       selbstverständlich, vor allem, weil digitale Schriftgestaltung noch ein wissenschaftliches Thema war und der
       Austausch im Mittelpunkt stand. Heute ist Offenheit keine Grundvoraussetzung mehr, sondern eine Entscheidung. Wer
       offene Werkzeuge nutzt, tut das nicht, weil es die einzige Möglichkeit ist, sondern weil es neue Freiheiten
-      schafft. Teilen statt abschotten, ausprobieren statt perfektionieren, weiterentwickeln statt festhalten.
-    </p>
-
-    <h1 id="experiment">6. Experiment: Parametrische Typografie mit METAPOST</h1>
-    <p>
-      <em>Anmerkung: Dieser Abschnitt basiert auf Notizen und Planungen.</em>
-    </p>
-    <h2>Ziel & Setup</h2>
-    <ul>
-      <li>Ziel ist es, Gestaltung mit Code praktisch zu erproben und daraus Erkenntnisse über Funktionsweise und Grenzen
-        parametrischer Schriftgestaltung (in METAPOST) zu gewinnen.</li>
-      <li>Es soll untersucht werden, wie sich Form verhält, wenn sie über Parameter gesteuert wird statt manuell
-        gezeichnet zu werden.</li>
-      <li>Das Experiment versteht Metapost als „ältere Technik im neuen Umfeld“, um herauszufinden, welche Potenziale
-        ein wenig genutztes System heute noch freilegt.</li>
-      <li>Schwerpunkt: Parameter einführen, Makros entwickeln und unter Extrembedingungen testen, um das
-        Reaktionsverhalten des Systems sichtbar zu machen.</li>
-    </ul>
-    <h2>Aufbau des Experiments</h2>
-    <ol>
-      <li>Arbeitsumgebung lauffähig machen (Plancton-Editor, Metapost-Syntax verstehen, erste Ausgaben erzeugen)</li>
-      <li>Freies Experimentieren zur Orientierung (einzelne Befehle, Wiederholung, Fehler, Ergebnisse ohne Ziel — „warm
-        werden“)</li>
-      <li>Handbücher & Open-Source-Material als Impulsgeber (Metapost-Manual, MF-Book, veröffentlichte Makros)</li>
-      <li>Analyse bestehender Metapost-Schriften (Meta-Old-French, Skeleton-Text, Converter-Tools – Parameter-Logik
-        verstehen)</li>
-      <li>Eigener Skelett-Entwurf (Entscheidung simplex statt duplex, um Aufbau und Parameterwirkung sichtbarer zu
-        halten)</li>
-      <li>Anwendung testen (SVG-Export, Versuch eines variable-Font-Outputs, Poster-Ansatz – Grenzen von Metapost werden
-        sichtbar)</li>
-    </ol>
-    <h2>Vorgehen im Experiment</h2>
-    <ul>
-      <li>Zeitintensivster Schritt: Sprache lernen und Fehler verstehen; Gestalten beginnt erst, wenn Befehle
-        „durchlaufen“.</li>
-      <li>Erkundung der Systemgrenzen: Was lässt Metapost zu, was verweigert es? (z. B. Stiftrotation vs.
-        Konturengestaltung)</li>
-      <li>Arbeiten mit Komponenten: serifen-Makros, super_curves, wiederverwendbare Module → Reduktion von
-        Code-Redundanz</li>
-      <li>Spannung im Prozess: mathematische Genauigkeit vs. optische Richtigkeit : Anpassungen sind notwendig</li>
-      <li>Wiederkehrende Probleme: Fehlersuche, Syntax-Stolpersteine, Glitches im Rendering, Export-Hürden → „Fehler als
-        Material“ statt „Fehler als Hindernis“</li>
-    </ul>
-
-    <h1 id="analyse">7. Analyse: Potenziale parametrischer Schriftgestaltung</h1>
-    <h2>7.1 Variabilität, Systemhaftigkeit, Dynamik</h2>
-    <ul>
-      <li>Parameteränderungen erzeugen verwandte Formen, nicht zufällige Varianten.</li>
-      <li>Struktur bleibt konstant, Ausdruck verschiebt sich → Identität + Variation.</li>
-      <li>Systemdenken führt zu anderen Entscheidungen: statt „Form reparieren“ → „Regel anpassen“.</li>
-    </ul>
-    <h2>7.2 Welche Kritikpunkte gelten heute noch?</h2>
-    <ul>
-      <li>Einstiegshürde bleibt hoch, vor allem ohne visuelles Feedback.</li>
-      <li>Optische Feinheiten brauchen bewusste Eingriffe, Mathematik allein reicht nicht.</li>
-      <li>Klassischer „intuitiver Gestus“ fehlt → Parametrik fordert Klarheit und Benennung.</li>
-    </ul>
-    <h2>7.3 Neue Möglichkeiten durch Open-Source</h2>
-    <ul>
-      <li>Zugriff auf Werkzeuge + Wissen = niedrigere Schwelle für Experimente.</li>
-      <li>Baukastenmentalität statt isolierter Werkzeuge.</li>
-      <li>Ergebnisse sind teilbar, fortsetzbar und modifizierbar → öffnet persönliches Experiment für kollektives
-        Lernen.</li>
-      <li>Direkter Übergang zum Poster-Tool: Parametrik + Open-Source = Gestaltungssystem statt fertiger Font.</li>
-    </ul>
-    <p>
-      Poster Tool:
-    </p>
-    <blockquote>
-      <p>
-        "So, yes, it was quite interesting to approach something in such a different way, not spending hours diving into
-        the details of a poster you were doing completely by hand, thoughtfully deciding upon each detail. This process
-        was very different. You spend way more time beforehand, but, once you have completed that phase, you can have
-        your 200 posters basically done in one afternoon."
-      </p>
-      <p class="author">Dimitri Jean- Nottat, Abs. 506</p>
+      schafft. Teilen statt abschotten, ausprobieren statt perfektionieren, weiterentwickeln statt festhalten.</p>
+    <div class="page-break"></div>
+    <h2 id="6-eigene-experimente-in-metapost">6. Eigene Experimente in Metapost</h2>
+    <p><b>Was wird untersucht? :</b><br>
+      Ziel des Experiments war es, parametrische Schriftgestaltung praktisch zu erfahren, und herauszufinden, welche
+      Potenziale ein altes, wenig genutztes System unter aktuellen Bedingungen bieten kann. Untersucht wurde, wie sich
+      Schriftformen verändern, wenn sie über Code und Parameter in der METAPOST Sprache erzeugt werden und welche
+      gestalterischen Konsequenzen daraus entstehen. Es wurde ein Spannungsfeld zwischen mathematischer Genauigkeit und
+      optischer Richtigkeit erkundet sowie die Wirkung extremer Parameterwerte getestet.</p>
+    <p>Dabei wurde bewusst auf die klassische Outline-Methode verzichtet. Obwohl Typedesigner*innen seit langem Schrift
+      als Flächen verstehen, eignet sich diese Denkweise nur beschränkt für parametrische und experimentelle
+      Ansätze.<sup id="fnref:53"><a href="#fn:53" role="doc-noteref">53</a></sup> Sie bietet zudem kaum Einsichten zur
+      Entstehung von neuen Schriftformen, wie Donald Knuth bereits feststellte:</p>
+    <blockquote><em>„Of course we could simply trace the outlines of the letters; but that would not be any fun, and it
+        would not give us any insights.“<sup id="fnref:54"><a href="#fn:54" role="doc-noteref">54</a></sup></em>
     </blockquote>
 
-    <h1 id="schluss">8. Schluss</h1>
-    <p>
-      (Ausblick und Zusammenfassung)
+    <h3 id="6-1-aufbau-des-experiments">6.1 Aufbau des Experiments</h3>
+    <p><b>Warum Metapost? :</b><br>
+      METAFONT wurde von Donald Knuth unter einer Open-Source-Lizenz entwickelt. Dadurch war es John D. Hobby möglich,
+      das System weiterzuentwickeln und an eigene Anforderungen anzupassen. Aus dieser Weiterentwicklung entstand
+      METAPOST, ein Programm zur Erzeugung von PostScript und SVG-Grafiken, ursprünglich für Abbildungen in technischen
+      Dokumenten gedacht.<sup id="fnref:55"><a href="#fn:55" role="doc-noteref">55</a></sup></p>
+    <p>METAPOST ist damit eine Abspaltung von METAFONT und unterliegt ebenfalls einer Open-Source-Lizenz. Beide Systeme
+      sind syntaktisch eng verwandt, unterscheiden sich jedoch im Ausgabeformat. Durch die Unterstützung des
+      Vektorformats (SVG) anstelle von Bitmaps eignet sich METAPOST besser für zeitgemäße digitale Anwendungen.
     </p>
-    <ul>
-      <li>Forschungsfrage beantworten</li>
-      <li>Kernerkenntnisse bündeln</li>
-      <li>Ausblick: Was könnte weitergedacht werden?</li>
+    <p>Auf Basis von METAPOST entwickelte das Kollektiv LUUSE einen Open-Source-Font-Editor, der parametrische
+      Schriftgestaltung visuell erfahrbar macht. Dieser Editor mit dem Namen „Plancton“.<sup id="fnref:56"><a
+          href="#fn:56" role="doc-noteref">56</a></sup> wurde von dem technischen Mitarbeiter Simon Thiefes an der HAW
+      Hamburg weiterentwickelt, um ihn insbesondere für Studierende besser nutzbar zu machen<sup id="fnref:57"><a
+          href="#fn:57" role="doc-noteref">57</a></sup> Dies war der Auslöser, weshalb Ich im Sommer 2024 in einem
+      Typedesign Kurs erstmals in den Kontakt mit parametrischer Schrift kam.</p>
+
+    <h3 id="6-2-dokumentation-des-experiments">6.2 Dokumentation des Experiments</h3>
+    <p>Um den Plancton-Editor nutzen zu können, musste zunächst eine lauffähige Arbeitsumgebung eingerichtet werden.
+      Dabei waren die Open-Source-Dokumentationen des LUUSE-Kollektivs auf GitHub sowie die Überarbeitung des
+      <em>Editors</em> von Simon Thiefes eine große Hilfe. Ohne diese Unterstützung wäre ein Zurechtkommen mit dem
+      System von Anfang an nur erschwert möglich gewesen.
+    </p>
+    <p>Die anschließende experimentelle Phase folgte keinem linearen Prozess, sondern war als offener Erkundungsraum
+      gedacht. Zu Beginn stand das Verständnis der METAFONT- bzw. METAPOST-Sprache selbst im Vordergrund. Es existieren
+      zwar umfangreiche Handbücher von Donald E. Knuth und John D. Hobby, die versuchen, jede Funktion des Programms zu
+      erklären, für unerfahrene Gestalter*innen wirken diese durch ihre kompexität jedoch oft abschreckend. Im METAFONT
+      Book sind besonders komplexe Stellen mit sogenannten „dangerous bend“-Symbolen markiert, als Hinweis darauf, dass
+      vollständiges Verständnis nicht immer vorgesehen ist.<sup id="fnref:58"><a href="#fn:58"
+          role="doc-noteref">58</a></sup> Zusätzlich fehlen in den online verfügbaren PDF-Versionen die begleitenden
+      Abbildungen,
+      die für das visuelle Verständnis vieler Funktionen entscheidend wären. Durch begrenzte Ressourcen und fehlende
+      Programmierkentnisse wurde die Orientierung in dieser neuen Arbeitsumgebung zu einem der zeitintensivsten Schritte
+      der gesamten Arbeit.</p>
+    <p>Nachdem grundlegende Befehle erlernt wurden, konnten einfache Parameter wie Strichstärke, Strichkontrast oder
+      Stiftrotation als Ausgangspunkt genutzt werden, um grundlegende Zusammenhänge zwischen Code und Form zu verstehen.
+      Weitere Einsichten entstanden durch die Analyse und Modifikation frei zugänglicher Metapost und Metafont-Schriften
+      wie zum Beispiel der „meta-old-french“ von LUUSE (2018).<sup id="fnref:59"><a href="#fn:59"
+          role="doc-noteref">59</a></sup> oder der „DOF“ von Paul Bernhard (2018)<sup id="fnref:60"><a href="#fn:60"
+          role="doc-noteref">60</a></sup></p>
+    <p>Der Fokus verlagerte sich dadurch langsam von einzelnen Buchstaben hin zu wiederverwendbaren Strukturen.
+      Sogennante
+      <em>Makros</em> ermöglichen es, komplexe Komponente wie Serifen oder Superelliptische Bögen einmal zu definieren
+      und in der
+      gesamten Schrift mehrfach anzuwenden. Dadurch wird der Code einzelner Glyphen deutlich kompakter, und die Schrift
+      lässt sich zunehmend als zusammenhängendes System begreifen.
+    <p>Erst auf dieser Grundlage entstand eine METAPOST-Version der Stempel-Garamond. Die Wahl fiel auf dieses
+      klassische Old-Style-Serifenmodell, da es heutzutage zahlreiche digitale Varianten der Garamond gibt. Diese
+      basieren jedoch fast ausschließlich auf der Outline-Methode und zeichnen die Formen im Wesentlichen nach. Einen
+      parametrischen Ansatz oder Raum für Experimente gibt es dort kaum. Die Garamond gilt außerdem als besonders gut
+      lesbar und ist stark von einer humanistischen Ästhetik geprägt. Diese Qualitäten lassen sich nicht so leicht in
+      ein streng mathematisches System übertragen. Genau darin lag der Reiz. Optische Anpassungen und Experimente zur
+      Lesbarkeit wurden dadurch zu einem wichtigen Teil der Versuche. Einige dieser Fragen zur Lesbarkeit tauchen auch
+      in einem Leserbrief des Typografs Albert Kapr an Donald Knuth auf, als Reaktion zu „The Concept of a Meta-Font“.
+    </p>
+    <blockquote><em>„1. By what percentage of over-all height does the optical center stand above the geometric
+        center?“</em></blockquote>
+    <blockquote><em>„2. By what percentage should the diameter of a circle be larger than the depth of a square so that
+        both appear to be optically of equal height?“</em></blockquote>
+    <blockquote><em>„4. Should the stroke width of small caps be equal to that of lower-case letters or slightly
+        thinner?“</em></blockquote>
+    <blockquote><em>„6. What is the thinnest possible stroke width of a newspaper text face?“<sup id="fnref:61"><a
+            href="#fn:61" role="doc-noteref">61</a></sup>
+      </em></blockquote>
+    <p>Solche Fragen lassen sich mit METAFONT auf praktische Weise beantworten, indem man Parameter schrittweise neu
+      definiert oder anpasst. Dabei kann man direkt beobachten, wie sich jede Anpassung auf das gesamte Schriftbild
+      auswirkt. Diese experimentelle Herangehensweise besitzt einen besonderen Reiz, den auch Donald Knuth im Metafont
+      Book beschreibt:</p>
+    <div class="page-break"></div>
+    <blockquote><em>„Moreover, the shapes can be defined in terms of variable parameters; computers can „draw“ new fonts
+        of characters in seconds, making it possible for designers to perform valuable experiments that were previously
+        unthinkable.“<sup id="fnref:62"><a href="#fn:62" role="doc-noteref">62</a></sup></em></blockquote>
+
+    <!-- Typetester CSS -->
+    <style>
+      /* 
+         ANLEITUNG FÜR DEN USER:
+         1. Kopieren Sie Ihre Font-Dateien (z.B.otf, .ttf, .woff) in den Ordner "fonts".
+         2. Passen Sie unten die Dateinamen in url('fonts/IHR_DATEINAME.otf') an.
+         3. Sie können weitere @font-face Blöcke hinzufügen, wenn Sie mehr Schriften brauchen.
+       */
+
+      @font-face {
+        font-family: 'GaramondMetaBase';
+        src: url('fonts/Garamond-Meta-Base.ttf');
+      }
+
+      @font-face {
+        font-family: 'GaramondMetaReverse';
+        src: url('fonts/Garamond-Meta-Reverse.ttf');
+      }
+
+      @font-face {
+        font-family: 'GaramondMetaLow';
+        src: url('fonts/Garamond-Meta-Low.ttf');
+      }
+
+      @font-face {
+        font-family: 'GaramondMetaModern';
+        src: url('fonts/Garamond-Meta-Modern.ttf');
+      }
+
+      @font-face {
+        font-family: 'GaramondMetaPolygon';
+        src: url('fonts/Garamond-Meta-Polygon.ttf');
+      }
+
+      @font-face {
+        font-family: 'GaramondMetaRound';
+        src: url('fonts/Garamond-Meta-Round.ttf');
+      }
+
+      @font-face {
+        font-family: 'GaramondMetaxHigh';
+        src: url('fonts/Garamond-Meta-xHigh.ttf');
+      }
+
+      @font-face {
+        font-family: 'GaramondMetaPolyBold';
+        src: url('fonts/Garamond-Meta-Poly-Bold.ttf');
+      }
+
+      .typetester-container {
+        margin-top: 1rem;
+        margin-bottom: 2rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .typetester-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.2rem;
+      }
+
+      .typetester-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 0.1rem;
+      }
+
+      .typetester-label {
+        font-size: 0.9rem;
+        font-weight: bold;
+        color: #333;
+        margin: 0;
+      }
+
+      .font-download-btn {
+        font-size: 0.7rem;
+        text-decoration: none;
+        color: #555;
+        border: 1px solid #ccc;
+        padding: 2px 6px;
+        border-radius: 3px;
+        background-color: #fff;
+        font-family: sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        transition: all 0.2s ease;
+      }
+
+      .font-download-btn:hover {
+        background-color: #f0f0f0;
+        color: #000;
+        border-color: #999;
+      }
+
+      @media print {
+        .font-download-btn {
+          display: none !important;
+        }
+      }
+
+      .typetester-input {
+        width: 100%;
+        padding: 0.4rem;
+        font-size: 2.5rem;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        background-color: #fafafa;
+        line-height: 1;
+      }
+
+      .typetester-input:focus {
+        outline: none;
+        border-color: #666;
+        background-color: #fff;
+      }
+
+      /* Slider Controls */
+      .typetester-controls {
+        background: #f0f0f0;
+        padding: 1rem;
+        border-radius: 5px;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .typetester-controls label {
+        font-weight: bold;
+        font-size: 0.9rem;
+        min-width: 80px;
+      }
+
+      .typetester-controls input[type=range] {
+        flex-grow: 1;
+        cursor: pointer;
+      }
+
+      .typetester-controls span {
+        font-weight: bold;
+        font-size: 0.9rem;
+        min-width: 40px;
+        text-align: right;
+      }
+
+      @media print {
+        .typetester-controls {
+          display: none !important;
+        }
+
+        .typetester-container {
+          display: block;
+          /* Ensure it prints if user wants, or hide? keeping visible */
+        }
+
+        .typetester-input {
+          font-size: 3rem !important;
+          border: 1px solid #ddd;
+          /* Lighter border for print */
+        }
+      }
+
+      .font-style-base {
+        font-family: 'GaramondMetaBase', serif;
+      }
+
+      .font-style-reverse {
+        font-family: 'GaramondMetaReverse', serif;
+      }
+
+      .font-style-low {
+        font-family: 'GaramondMetaLow', serif;
+      }
+
+      .font-style-modern {
+        font-family: 'GaramondMetaModern', serif;
+      }
+
+      .font-style-polygon {
+        font-family: 'GaramondMetaPolygon', serif;
+      }
+
+      .font-style-round {
+        font-family: 'GaramondMetaRound', serif;
+      }
+
+      .font-style-xhigh {
+        font-family: 'GaramondMetaxHigh', serif;
+      }
+
+      .font-style-PolyBold {
+        font-family: 'GaramondMetaPolyBold', serif;
+      }
+    </style>
+
+    <!-- Typetester HTML -->
+    <p>Einige dieser Garamond-Meta-Variationen sind im folgenden Bereich abgebildet, diese können über die
+      Thesis-Website getestet, skaliert und installiert werden:</p>
+
+    <div class="typetester-controls">
+      <label for="fontsize-slider">Größe:</label>
+      <input type="range" id="fontsize-slider" min="1" max="8" step="0.1" value="2.5">
+      <span id="fontsize-value">2.5rem</span>
+    </div>
+
+    <div class="typetester-container">
+      <div class="typetester-group">
+        <div class="typetester-header">
+          <h3 class="typetester-label">Garamond-Meta-Base</h3>
+          <a href="fonts/Garamond-Meta-Base.ttf" download class="font-download-btn">Download</a>
+        </div>
+        <input type="text" class="typetester-input font-style-base" value="Hamburgefonts"
+          placeholder="Tippen Sie hier.." spellcheck="false">
+      </div>
+
+      <div class="typetester-group">
+        <div class="typetester-header">
+          <h3 class="typetester-label">Garamond-Meta-Reverse</h3>
+          <a href="fonts/Garamond-Meta-Reverse.ttf" download class="font-download-btn">Download</a>
+        </div>
+        <input type="text" class="typetester-input font-style-reverse" value="Hamburgefonts"
+          placeholder="Tippen Sie hier.." spellcheck="false">
+      </div>
+
+      <div class="typetester-group">
+        <div class="typetester-header">
+          <h3 class="typetester-label">Garamond-Meta-Round</h3>
+          <a href="fonts/Garamond-Meta-Round.ttf" download class="font-download-btn">Download</a>
+        </div>
+        <input type="text" class="typetester-input font-style-round" value="Hamburgefonts"
+          placeholder="Tippen Sie hier.." spellcheck="false">
+      </div>
+      <div class="typetester-group">
+        <div class="typetester-header">
+          <h3 class="typetester-label">Garamond-Meta-Modern</h3>
+          <a href="fonts/Garamond-Meta-Modern.ttf" download class="font-download-btn">Download</a>
+        </div>
+        <input type="text" class="typetester-input font-style-modern" value="Hamburgefonts"
+          placeholder="Tippen Sie hier.." spellcheck="false">
+      </div>
+      <div class="typetester-group">
+        <div class="typetester-header">
+          <h3 class="typetester-label">Garamond-Meta-Polygon</h3>
+          <a href="fonts/Garamond-Meta-Polygon.ttf" download class="font-download-btn">Download</a>
+        </div>
+        <input type="text" class="typetester-input font-style-polygon" value="Hamburgefonts"
+          placeholder="Tippen Sie hier.." spellcheck="false">
+      </div>
+
+      <div class="typetester-group">
+        <div class="typetester-header">
+          <h3 class="typetester-label">Garamond-Meta-Low</h3>
+          <a href="fonts/Garamond-Meta-Low.ttf" download class="font-download-btn">Download</a>
+        </div>
+        <input type="text" class="typetester-input font-style-low" value="Hamburgefonts" placeholder="Tippen Sie hier.."
+          spellcheck="false">
+      </div>
+
+      <div class="typetester-group">
+        <div class="typetester-header">
+          <h3 class="typetester-label">Garamond-Meta-xHight</h3>
+          <a href="fonts/Garamond-Meta-xHigh.ttf" download class="font-download-btn">Download</a>
+        </div>
+        <input type="text" class="typetester-input font-style-xhigh" value="Hamburgefonts"
+          placeholder="Tippen Sie hier.." spellcheck="false">
+      </div>
+      <div class="typetester-group">
+        <div class="typetester-header">
+          <h3 class="typetester-label">Garamond-Meta-Poly-Bold</h3>
+          <a href="fonts/Garamond-Meta-Poly-Bold.ttf" download class="font-download-btn">Download</a>
+        </div>
+        <input type="text" class="typetester-input font-style-PolyBold" value="Hamburgefonts"
+          placeholder="Tippen Sie hier.." spellcheck="false">
+      </div>
+    </div>
+
+
+    <p>Neben den bewussten Anpassungen und Experimenten spielten auch Zufallswerte eine Rolle. So entstanden
+      unerwartete Ergebnisse durch Logikfehler, verdrehte mathematische Zeichen oder sonstige Glitches.<span
+        class="sidenote-marker">Abb. 9</span> Diese Fehler
+      werden nicht nur als Störung verstanden, sondern als Teil des gestalterischen Prozesses in Metafont. Um den
+      Charakter von Metafont besser zu vermitteln, zeigt Donald Knuth seine „Metaflops"<span
+        class="sidenote-marker">Abb. 10</span>, Ergebnisse die durch Zufälle
+      entstanden sind. Er stellte dabei fest:
+    </p>
+    <blockquote><em>„In fact, the computer is full of surprises, and this is where a lot of the fun comes in.“<sup
+          id="fnref:63"><a href="#fn:63" role="doc-noteref">63</a></sup></em></blockquote>
+         <span class="sidenote">
+        <span class="figure-sidenote">
+          <img src="Abbildungen/EigeneMetaflops.png" alt="Eigene Metaflops">
+          <span class="figure-caption">Abb. 9: Eigene Metaflops</span>
+        </span>
+        <span class="figure-sidenote">
+          <img src="Abbildungen/MetaflopsKnuth.png" alt="Metaflop2">
+          <span class="figure-caption">Abb. 10: Knuths Metaflops</span>
+        </span>
+      </span>
+    <p>Parallel dazu wurden die gestalterischen Grenzen von METAPOST erkundet. Dafür wurden verschiedene Effekte aus
+      Handbüchern und offenen Beispielsammlungen entnommen, neu kombiniert und als <em>Makros</em> definiert. Auf diese
+      Weise
+      ließen sich die Effekte konsistent auf alle Glyphen anwenden, es entstanden neue experimentelle Zeichenmethoden,
+      aus denen unerwartete Buchstabenformen hervorgingen. Einige der daraus resultierenden Ergebnisse wurden als
+      Überschriften der Kapitel abgebildet.
+    <p>Der Plancton-Editor funktioniert nicht immer wie erhofft. So kam es immer wieder zu unerwarteten Errors, die
+      einen zunächst planlos zurückließen. Vor allem in der Anfangsphase führte dies häufig zu starker Frustration und
+      dazu, dass die gesamte Schriftdatei von Grund auf neu aufgebaut werden musste. Mit der Zeit lernte man jedoch,
+      besser mit solchen Fehlern umzugehen. Leider stellte sich erst gegen Ende heraus, dass sich eine variable Schrift
+      mit METAPOST nicht so einfach erzeugen lässt wie zunächst angenommen. In diesem Fall standen „Fehler“, also
+      automatisch generierte Artefakte im Weg. Denn die Konvertierung der Stiftformen in Outlines durch
+      METAPOST erzeugt stark fragmentierte Pfade, wodurch die ganze Schriftdatei unübersichtlich wird und eine nachträgliche
+      Bearbeitung für variable und wirklich saubere Schriften notwendig wird.<sup id="fnref:64"><a href="#fn:64"
+          role="doc-noteref">64</a></sup>
+      Da diese Nachbearbeitung jedoch sehr zeitintensiv wäre, wurde der Fokus von der Erzeugung von TrueType-Fonts, auf
+      eine praktische Anwendung des Metapost System in neuen, und dynamischen Umfeld verschoben, genauer gesagt auf die
+      Weiterentwicklung eines <em>Web-Tools.</em></p>
+
+    <h3 id="6-3-anwendungen-im-web-tool">6.3 Anwendungen im Web Tool</h3>
+    <p>Die in den METAPOST-Experimenten gewonnenen Erkenntnisse flossen in die Weiterentwicklung des webbasierten
+      Poster-Tools des LUUSE-Kollektivs ein. Das „Maxima-Programme„-Tool<sup id="fnref:65"><a href="#fn:65"
+          role="doc-noteref">65</a></sup><span class="sidenote-marker">Abb. 11</span> ermöglicht es Bewohner*innen von
+      Maxima, Veranstaltungen in eine
+      Online-Tabelle einzutragen. Durch CSS wird die Tabelle ausgelesen, daraus entsteht ein automatisches Layout der
+      Veranstaltungen. Die Schrift und das Layout passen sich bei jedem neuen Eintrag automatisch an die jeweilige
+      Inhaltsmenge und den verfügbaren Raum an. Der Output ist ein flexibles Poster Layout im Format A3. All das wird
+      ermöglicht durch Python-Skripte und den Einsatz von METAPOST. Das Tool zeigt, dass METAPOST-Schriften auf
+      dynamische Umgebungen reagieren können, etwa durch die automatische Skalierung von Höhe und Breite.
+    </p>
+       <span class="sidenote">
+        <span class="figure-sidenote" id="fig-11">
+          <img src="Abbildungen/Maxima2022.png" alt="Maxima interface">
+          <span class="figure-caption">Abb. 11: Maxima-Programme-Tool Output </span>
+        </span>
+        <span class="figure-sidenote" id="fig-12">
+          <img src="Abbildungen/Glitch.png" alt="Burrowlab output">
+          <span class="figure-caption">Abb. 12: Eigener Entwicklungszwischenstand</span>
+        </span>
+      </span>
+    <div class="page-break"></div>
+    <p><b>Konzept:</b><br>
+      Ziel war es, dieses Tool für die eigenen Fragestellung weiterzudenken und so die Funktionsweise parametrischer
+      Schrift sichtbar zu machen. Die Schrift wird hier als veränderbares System erlebt. Parameter lassen sich quasi in
+      Echtzeit anpassen und erzeugen unterschiedlichste Varianten aus der selben Grundstruktur. Auf diese Weise wird das
+      METAFONT-Prinzip unmittelbar erfahrbar.</p>
+    <p><b>Umsetzung:</b><br>
+      Zu Beginn stellte sich das Verständnis der Funktionsweise des Tools als Herausforderung dar, da die Dokumentation
+      auf GitHub nur sehr knapp gehalten war. Erst durch eine E-Mail an das LUUSE-Kollektiv und eine ausführliche
+      Rückmeldung von Thomas Bris, einem ehemaligen Praktikanten des Kollektivs, konnten offene Fragen geklärt und die
+      Arbeitsumgebung
+      lauffähig gemacht werden. Im nächsten Schritt wurde die entwickelte Garamond-Meta syntaktisch angepasst, um in
+      dieser neuen Umgebung korrekt aufgerufen zu werden. Dafür war erneut etwas Zeit nötig, um sich in der Struktur des
+      Codes zurechtzufinden. Um das Verhalten der Schrift überschaubar zu testen, wurden zuerst die Versalien
+      integriert, da sie eine einheitliche Höhe besitzen.
+      Nach der erfolgreichen Einbindung folgten schrittweise weitere Anpassungen des Tools, unterstützt durch Googles
+      KI-Modell „Antigravity", mit dem sich komplexe Code-Strukturen analysieren und auch neu erstellen lassen. Auch
+      hier entstanden im Prozess immer wieder überraschende Ergebnisse durch Fehler im Code<span
+        class="sidenote-marker">Abb. 12</span>. Zunächst wurden die hartkodierten Inhalte, also Titel und Monatsnamen,
+      durch einen flexiblen Texteingabe-Mechanismus
+      ersetzt. Dadurch entstand ein einfaches grafisches <em>User-Interface</em> (GUI).
+    </p>
+    <p>Das Layout reagiert nun dynamischer auf den Inhalt. Überschriften können länger werden und die Spalten passen
+      sich automatisch an die neue Textlänge an. Zusätzlich können anstelle von Text nun auch grafische Elemente
+      (SVG) direkt in die Spalten geladen werden. Die Auswahl dieser Grafiken fiel in diesem Fall auf kleine
+      METAPOST-Zeichnungen, die größtenteils der umfangreichen Sammlung „metapost-examples“ von Toby Thurston auf GitHub
+      entnommen wurden.<sup id="fnref:66"><a href="#fn:66" role="doc-noteref">66</a></sup> Diese stehen unter der GNU
+      GPL v3-Lizenz und wurden für meinen Zweck leicht angepasst. Alle Grafiken wurden auf die gleiche Größe
+      gebracht und über einen gemeinsamen Parameter verknüpft, sodass sie schnell und konsistent verändert werden
+      können. Die kleinen Zeichnungen verweisen dabei indirekt auf METAPOST, das System, das für technische Abbildungen
+      entwickelt wurde aber ebenso zur Formerzeugung von Schrift genutzt werden kann.</p>
+    <p>Als letztes wurden die wichtigsten Parameter der Garamond-Meta über das GUI in das Frontend integriert. So kann
+      die Schrift schnell verändert werden, ohne das <em>Web-Tool</em> zu verlassen. Nutzer*innen können verschiedenen
+      Funktionen
+      der Parameter erkunden indem sie Zahlenwerte verändern, ohne sich mit komplexem Code auseinandersetzen zu müssen.
+      Die Parameter werden in Gruppen zusammengefasst und anstelle der Events direkt in die Spalten des Posters geladen.
+      Dadurch lässt sich auch noch nach dem Druck nachvollziehen, welche Parameter für die abgebildete Schriftfamilie
+      verwendet wurden.</p>
+    <p>Im Verlauf des Projekts wurde das Poster-Tool schrittweise so weiterentwickelt, dass sich die erzeugten
+      Ergebnisse auch für ein Type-Specimen nutzen lassen. Auf diese Weise entstand schließlich das physische Objekt der
+      Arbeit: das Garamond-Meta-Specimen. Die A3-Seiten werden direkt aus dem <em>Web-Tool</em> generiert, gedruckt,
+      überdruckt
+      und anschließend mittig gefaltet.
+      Ein ausgewählter Teil der möglichen Schriftvarianten ist in sechs Kapitel beziehungsweise Parameterruppen
+      gegliedert. Farbliche Überlagerungen im Risodruck unterstützen die Darstellung der Variabilität und machen
+      sichtbar, wie unterschiedliche Formen aus derselben zugrunde liegenden Struktur hervorgehen. </p>
+    <p>Das <em>Web-Tool</em> zeigt, dass parametrische Schriftgestaltung ihr Potenzial besonders in dynamischen
+      Anwendungen
+      entfaltet, etwa in Posterreihen oder automatisierten Layoutsystemen, bei denen Inhalte und Formate variieren. Der
+      zeitliche Aufwand verlagert sich dabei vom einzelnen Design hin zur Entwicklung des Systems selbst. Wie der
+      Grafikdesigner Dimitri Jeannottat im Zusammenhang mit generativen Gestaltungssystemen beschreibt, verändert sich
+      dabei vor allem der zeitliche Fokus des Entwerfens. Statt jedes einzelne Plakat manuell auszuarbeiten, wird mehr
+      Zeit davor in die Entwicklung des Systems investiert, das anschließend eine Vielzahl an Varianten in kürze
+      hervorbringen kann.<sup id="fnref:67"><a href="#fn:67" role="doc-noteref">67</a></sup></p>
+
+    <h3 id="6-4-thesis-website">6.4 Thesis-Website</h3>
+    <p>Diese gedruckte Form der Bachelor-Tesis entstand, auch wie das Garamond-Meta-Specimen, im <em>Web-to-Print</em>
+      Verfahren.
+      Herkömmliche Produktionswerkzeuge wie InDesign wurden also auch hier vermieden, denn die Verwendung von HTML
+      bietet andere Möglichkeiten. Die Website soll einen weiten Zugang zu dem Thema ermöglichen, ganz im Sinne des
+      Open-Source-Gedanken. Die genutzten Quellen sind verlinkt und können einfach abgerufen werden. Zusätzlich können
+      einige Varianten der Garamond-Meta getestet und kostenlos als TTF-Datei heruntergeladen werden. Diese Website
+      verwendet die frei zugängliche „LATEX.CSS-Libary“ von Vincent Dörig.<sup id="fnref:68"><a href="#fn:68"
+          role="doc-noteref">68</a></sup> Die Library lässt die Website wie ein wissenschaftliches LATEX-Dokument
+      aussehen. Diese Gestaltung wurde bewusst gewählt, denn sie verweist, über die „Computer-Modern“ -Schrift auf die
+      typografische Arbeit von Donald Knuth und würdigt seine lange Arbeit an den Systemen. Ein schönes Detail in der
+      ganzen Geschichte von METAFONT ist, dass nachdem Knuth 1984 METAFONT und TeX überarbeitet hatte, die Systeme
+      schließlich eine typografische Qualität erreichten, die auch im Bildungswesen anerkannt wurde. In der Folge begann
+      die American Mathematical Society (AMS), Autor*innen dazu zu ermutigen, ihre schriftlichen Arbeiten für
+      „Transactions of the American Mathematical Society“ in TeX-Form einzureichen, ausgerechnet für ein Journal, dessen
+      gestalterische Qualität Knuth zehn Jahre zuvor noch öffentlich kritisiert hatte.<sup id="fnref:69"><a
+          href="#fn:69" role="doc-noteref">69</a></sup></p>
+
+
+    <h2 id="7-analyse-der-experimente">7. Analyse der Experimente</h2>
+    <p>Die Experimente haben gezeigt, dass der parametrische Ansatz einen grundlegend anderen Zugang zum Entwerfen von
+      Schrift bietet. Anstelle einzelner Formen rückt das zugrunde liegende System in den Fokus. Parameter, Regeln und
+      Beziehungen bestimmen das Erscheinungsbild der gesamten Schriftfamilie. Ein großes Potenzial dieses Ansatzes liegt
+      in seiner Variabilität. Schrift entsteht nicht als festgelegtes Objekt, sondern als offenes System, das auf
+      unterschiedliche Bedingungen reagieren kann. Besonders deutlich wird dieses Potenzial in dynamischen Anwendungen,
+      etwa in automatisierten Layoutsystemen oder webbasierten Formaten, in denen sich Schrift flexibel an Inhalt und
+      Kontext anpasst. Auch für zukünftige gestalterische Anwendungen könnte dieser Aspekt relevant bleiben.
+      Zwar werden durch METAFONT strukturelle Zusammenhänge explizit formuliert, jedoch bedeutet dies nicht, dass der
+      gestalterische Entwurfsprozess selbst abgebildet wird. Wie Gerry Leonidas in <em>„In search of the digital
+        Cresci“</em> betont, ist das Ergebnis des Meta-Designs
+    <blockquote><em>„[...] nothing more than the final trace of the process, not in any way a representation of the
+        design process itself“. <sup id="fnref:70"><a href="#fn:70" role="doc-noteref">70</a></sup></em></blockquote>
+    Die für das Verständnis erforderliche Programmiersprache stellt in der Praxis eine Hürde dar, da sie für viele
+    Designer*innen wie eine Fremdsprache wirkt und so den Zugang zu parametrischen Systemen erschwert.<sup
+      id="fnref:71"><a href="#fn:71" role="doc-noteref">71</a></sup> Die praktische Arbeit bestätigt damit auch bekannte
+    Kritikpunkte.
+    Parametrische Systeme erfordern ein abstrakteres Denken, der Einstieg ist zeitintensiv und deutlich
+    weniger intuitiv als das direkte Zeichnen von Konturen. Diese Hürden bestehen weiterhin. Allerdings zeigt sich,
+    dass moderne Werkzeuge wie zum Beispiel K.I., visuelle Editoren und offene Systeme dazu beitragen können, diese
+    Distanz zu verringern und parametrische Ansätze zugänglicher zu machen. Eine entscheidende Rolle spielt dabei die
+    Open-Source-Kultur. Open-Source-Tools und frei zugänglicher Code ermöglichen nicht nur einen niedrigeren Zugang,
+    sondern fördern auch kollektives Lernen und eine experimentelle Haltung jenseits etablierter Standards.</p>
+
+    <h2 id="8-schluss">8. Schluss</h2>
+    <p>Diese Arbeit zeigt, dass parametrische Schriftgestaltung weniger eine alternative Technik, sondern vielmehr eine veränderte Haltung zum Entwerfen darstellt. Schrift wird nicht gezeichnet, sondern beschrieben und geschrieben, nicht als abgeschlossenes Objekt, sondern als offenes und frei zugängliches System gedacht. Die Experimente mit METAPOST verdeutlichen, dass das Arbeiten mit Regeln, Parametern und auch Fehlern zwar eine Herausforderung ist, aber auch neue gestalterische Spielräume eröffnet und unerwartete Ideen hervorbringt. Klassische Entwurfsmethoden werden dadurch nicht ersetzt, sondern sinnvoll ergänzt. Besonders im Zusammenspiel mit Open-Source-Tools und in dynamischen Anwendungen zeigt sich das Potenzial <em>parametrischer Zeichen</em> als zeitgemäßer Zugang zur Schriftgestaltung. Die Arbeit versteht sich nicht als Vergleich verschiedener Schriftsysteme, sondern als Ausgangspunkt für weiteres Denken jenseits etablierter Normen und als Einladung zum Experimentieren und zum offenen Teilen eigener Prozesse, um kollektives Lernen unter Gestalter*innen zu ermöglichen, ganz nach wissenschaftlichen Open-Source-Prinzipien.</p>
+    
+        <div class="page-break"></div>
+<span class="hint-print">
+    <h2 id="Erklärung">Erklärung</h2>  
+    <p>Hiermit erkläre ich, dass ich die vorliegende Arbeit selbständig und ohne Benutzung anderer
+    als der angegebenen Hilfsmittel angefertigt habe. Wörtlich oder dem Sinn nach aus anderen
+    Werken entnommene Gedanken habe ich unter Angabe der Quelle kenntlich gemacht. Dies
+    gilt auch für bildliche Darstellungen sowie für Quellen aus dem Internet.<br>
+    
+    Mit einer Einsichtnahme und Ausleihe in der Bibliothek der HAW Hamburg (Department
+    Design) bin ich einverstanden/nicht einverstanden.</p><br>
+    ........................................<br>
+    Ort, Datum Unterschrift
+</span>
+
+    <div class="page-break"></div>
+<style>
+    /* Spezifische Ergänzung für den hängenden Einzug passend zu LaTeX.css */
+    .bibliography-list {
+        list-style: none;
+        padding-left: 0;
+    }
+
+    .bibliography-list li {
+        padding-left: 2rem;
+        text-indent: -2rem;
+        margin-bottom: 0.75rem;
+    }
+
+    /* Entfernt alle verbleibenden Kursiv-Stile global für diesen Bereich */
+    #footnotes-section em, 
+    #footnotes-section i,
+    #literature-section em,
+    #literature-section i {
+        font-style: normal !important;
+    }
+</style>
+
+<div id="footnotes-section">
+    <h3 id="Fußnoten">Fußnoten</h3>
+    <ol class="footnotes">
+        <li id="fn:1">Kai Bernau, Beyond Bézier: The Stroke (2024). min. 05:35 <a href="#fnref:1" class="backlink" role="doc-backlink">↩</a></li>
+        <li id="fn:2">Vgl. Jürg Lehni, Peter Bilak, François Rappo, Pierre Keller, and Ecole cantonale d'art de Lausanne. "Typeface As Program." Lausanne, Switzerland: ECAL/University of art and design. (Lausanne 2010) , S. 81 ff. <a href="#fnref:2" class="backlink" role="doc-backlink">↩</a></li>
+        <li id="fn:3">Ebd., Vgl. S. 81 ff. <a href="#fnref:3" class="backlink" role="doc-backlink">↩</a></li>
+        <li id="fn:4">Ebd., Vgl. S. 81 ff. <a href="#fnref:4" class="backlink" role="doc-backlink">↩</a></li>
+        <li id="fn:5">Ebd., S. 81 ff. <a href="#fnref:5" class="backlink" role="doc-backlink">↩</a></li>
+        <li id="fn:6">Ebd., S. 81 ff. <a href="#fnref:6" class="backlink" role="doc-backlink">↩</a></li>
+        <li id="fn:7">Ebd., S. 81 ff. <a href="#fnref:7" class="backlink" role="doc-backlink">↩</a></li>
+        <li id="fn:8">Kai Bernau, Beyond Bézier: The Stroke (2024). <a href="#fnref:8" class="backlink" role="doc-backlink">↩</a></li>
+        <li id="fn:9">Karl Gerstner, Programme Entwerfen, digitale Edition, hrg. von Harald Geisler (2022; Originalausgabe 1963), S. 18. <a href="#fnref:9" class="backlink" role="doc-backlink">↩</a></li>
+        <li id="fn:10">Ebd., Vgl. S. 13. <a href="#fnref:10" class="backlink" role="doc-backlink">↩</a></li>
+        <li id="fn:11">Ebd., S. 13. <a href="#fnref:11" class="backlink" role="doc-backlink">↩</a></li>
+        <li id="fn:12">Demian Conrad and Silvio Lorusso, Graphic Design in the Post-Digital Age: A Survey of Practices Fuelled by Creative Coding (2021), S. 264. <a href="#fnref:12" class="backlink" role="doc-backlink">↩</a></li>
+        <li id="fn:13">Ebd., S. 83. <a href="#fnref:13" class="backlink" role="doc-backlink">↩</a></li>
+        <li id="fn:14">Ebd., Vgl. S. 287. <a href="#fnref:14" class="backlink" role="doc-backlink">↩</a></li>
+        <li id="fn:15">Ebd., S. 292. <a href="#fnref:15" class="backlink" role="doc-backlink">↩</a></li>
+        <li id="fn:16">Ebd., S. 72. <a href="#fnref:16" class="backlink" role="doc-backlink">↩</a></li>
+        <li id="fn:17">Roland Früh, Beyond Bézier: Introduction (2024). <a href="#fnref:17" class="backlink" role="doc-backlink">↩</a></li>
+        <li id="fn:18">Roland Früh, Beyond Bézier: Introduction (2024). <a href="#fnref:18" class="backlink" role="doc-backlink">↩</a></li>
+        <li id="fn:19">Vgl. Jürg Lehni, "Typeface As Program," S. 81 ff. <a href="#fnref:19" class="backlink" role="doc-backlink">↩</a></li>
+        <li id="fn:20">Ferdinand Ulrich, "Automatic Type Design 3, Talk: Digital type from the day before yesterday and tomorrow." ANRT, 2023. <a href="#fnref:20" class="backlink" role="doc-backlink">↩</a></li>
+        <li id="fn:21">Vgl. Lynn L. Ruggles, "Letterform Design Systems," Technical Report CS-TR-83-971 (Stanford University, 1983), S. 6-7. <a href="#fnref:21" class="backlink" role="doc-backlink">↩</a></li>
+        <li id="fn:22">Vgl. Jacques André, "Prehistory of Digital Fonts," TUGboat 44, Nr. 1 (2023), S. 38. <a href="#fnref:22" class="backlink" role="doc-backlink">↩</a></li>
+        <li id="fn:23">Ebd., Vgl. S. 38. <a href="#fnref:23" class="backlink" role="doc-backlink">↩</a></li>
+        <li id="fn:24">Ebd., Vgl. S. 40. <a href="#fnref:24" class="backlink" role="doc-backlink">↩</a></li>
+        <li id="fn:25">Vgl. Jürg Lehni, "Typeface As Program," S. 81 ff. <a href="#fnref:25" class="backlink" role="doc-backlink">↩</a></li>
+        <li id="fn:26">Ebd. Vgl. S. 81 ff. <a href="#fnref:26" class="backlink" role="doc-backlink">↩</a></li>
+        <li id="fn:27">Vgl. Donald E. Knuth, "Mathematical Typography," Bulletin of the American Mathematical Society 1, Nr. 2 (1979), S. 343. <a href="#fnref:27" class="backlink" role="doc-backlink">↩</a></li>
+        <li id="fn:28">Vgl. Jürg Lehni, "Typeface As Program," S. 81 ff. <a href="#fnref:28" class="backlink" role="doc-backlink">↩</a></li>
+        <li id="fn:29">Vgl. Donald E. Knuth, "Lessons Learned from Metafont," Visible Language 19, Nr. 1 (1985), S. 39. <a href="#fnref:29" class="backlink" role="doc-backlink">↩</a></li>
+        <li id="fn:30">Ebd., S. 39. <a href="#fnref:30" class="backlink" role="doc-backlink">↩</a></li>
+        <li id="fn:31">Ebd., S. 42. <a href="#fnref:31" class="backlink" role="doc-backlink">↩</a></li>
+        <li id="fn:32">Ebd., S. 39. <a href="#fnref:32" class="backlink" role="doc-backlink">↩</a></li>
+        <li id="fn:33">Ebd., Vgl. S. 38. <a href="#fnref:33" class="backlink" role="doc-backlink">↩</a></li>
+        <li id="fn:34">Vgl. Jürg Lehni, "Typeface As Program," S. 81 ff. <a href="#fnref:34" class="backlink" role="doc-backlink">↩</a></li>
+        <li id="fn:35">Vgl. Jacques André, "Prehistory of Digital Fonts," S. 42-43. <a href="#fnref:35" class="backlink" role="doc-backlink">↩</a></li>
+        <li id="fn:36">Donald E. Knuth, Computers and Typesetting, Volume E: Computer Modern Typefaces (1986), S. 1. <a href="#fnref:36" class="backlink" role="doc-backlink">↩</a></li>
+        <li id="fn:37">Donald E. Knuth, "Lessons Learned from Metafont," S. 47. <a href="#fnref:37" class="backlink" role="doc-backlink">↩</a></li>
+        <li id="fn:38">Vgl. Reactions to “The Concept of a Meta-Font” https://shreevatsa.net/tex/metafont/concept <a href="#fnref:38" class="backlink" role="doc-backlink">↩</a></li>
+        <li id="fn:39">Vgl. Dave Crossland, "Why Didn't Metafont Catch On," S. 419. <a href="#fnref:39" class="backlink" role="doc-backlink">↩</a></li>
+        <li id="fn:40">Lynn L. Ruggles, "Letterform Design Systems," S. 16. <a href="#fnref:40" class="backlink" role="doc-backlink">↩</a></li>
+        <li id="fn:41">Dexter Sinister, "A Note on the Type." https://readings.design/PDF/A-Note-on-the-Type-dexter-sinister.pdf <a href="#fnref:41" class="backlink" role="doc-backlink">↩</a></li>
+        <li id="fn:42">Alexis Reigel, Marco Müller, "Metaflop Modulator." https://www.metaflop.com <a href="#fnref:42" class="backlink" role="doc-backlink">↩</a></li>
+        <li id="fn:43">LUUSE, "Plancton Repository," https://gitlab.com/Luuse/plancton <a href="#fnref:43" class="backlink" role="doc-backlink">↩</a></li>
+        <li id="fn:44">Santhosh Thottingal, "Metapost Sandbox." https://mpost.thottingal.in <a href="#fnref:44" class="backlink" role="doc-backlink">↩</a></li>
+        <li id="fn:45">Vgl. Jürg Lehni, "Typeface As Program," S. 81 ff. <a href="#fnref:45" class="backlink" role="doc-backlink">↩</a></li>
+        <li id="fn:46">Fábio Pereira, Tiago Martins , "Letter Species" https://www.letterspecies.com <a href="#fnref:46" class="backlink" role="doc-backlink">↩</a></li>
+        <li id="fn:47">Filip Paldia, Martin Cetkovsky, Matus Zdansky, "LTTR/INK." https://www.lttrink.com <a href="#fnref:47" class="backlink" role="doc-backlink">↩</a></li>
+        <li id="fn:48">Phillip Koller, "Burrow Lab." https://www.burrowlab.com <a href="#fnref:48" class="backlink" role="doc-backlink">↩</a></li>
+        <li id="fn:49">Free Software Foundation, "GNU General Public License, Version 3." https://www.gnu.org/licenses/gpl-3.0.de.html <a href="#fnref:49" class="backlink" role="doc-backlink">↩</a></li>
+        <li id="fn:50">Vgl. Velvetyne Type Foundry, TYPEONE #10, S. 87. <a href="#fnref:50" class="backlink" role="doc-backlink">↩</a></li>
+        <li id="fn:51">Vgl. Velvetyne Type Foundry, TYPEONE #10, S. 88-89. <a href="#fnref:51" class="backlink" role="doc-backlink">↩</a></li>
+        <li id="fn:52">Vgl. Velvetyne Type Foundry, TYPEONE #10, S. 89-90. <a href="#fnref:52" class="backlink" role="doc-backlink">↩</a></li>
+        <li id="fn:53">Vgl. Jacques André, "Prehistory of Digital Fonts," S. 47. <a href="#fnref:53" class="backlink" role="doc-backlink">↩</a></li>
+        <li id="fn:54">Donald E. Knuth, "Lessons Learned from Metafont," S. 47. <a href="#fnref:54" class="backlink" role="doc-backlink">↩</a></li>
+        <li id="fn:55">Vgl. John D. Hobby, METAPOST: A User's Manual (2022), S. 1-2. <a href="#fnref:55" class="backlink" role="doc-backlink">↩</a></li>
+        <li id="fn:56">LUUSE, "Plancton Editor," https://gitlab.com/Luuse/plancton <a href="#fnref:56" class="backlink" role="doc-backlink">↩</a></li>
+        <li id="fn:57">HAW Type Design, "Plancton Editor," https://github.com/haw-type-design/plancton-editor <a href="#fnref:57" class="backlink" role="doc-backlink">↩</a></li>
+        <li id="fn:58">Vgl. Donald E. Knuth, Computers and Typesetting, Volume C: The METAFONTbook (Reading, MA: Addison-Wesley, 1986), S. 8. <a href="#fnref:58" class="backlink" role="doc-backlink">↩</a></li>
+        <li id="fn:59">LUUSE, "Meta Old French," https://gitlab.com/Luuse/foundry/meta-old-french <a href="#fnref:59" class="backlink" role="doc-backlink">↩</a></li>
+        <li id="fn:60">Bernhard Paul, "DOF," https://gitlab.com/swrs/dof <a href="#fnref:60" class="backlink" role="doc-backlink">↩</a></li>
+        <li id="fn:61">Vgl. Reactions to “The Concept of a Meta-Font” https://shreevatsa.net/tex/metafont/concept#kapr <a href="#fnref:61" class="backlink" role="doc-backlink">↩</a></li>
+        <li id="fn:62">Donald E. Knuth, The METAFONTbook, S. 6. <a href="#fnref:62" class="backlink" role="doc-backlink">↩</a></li>
+        <li id="fn:63">Donald E. Knuth, "Lessons Learned from Metafont," S. 44. <a href="#fnref:63" class="backlink" role="doc-backlink">↩</a></li>
+        <li id="fn:64">Vgl. Karel Píška, "Creating Type 1 Fonts from METAFONT Sources: Comparison of Tools, Techniques and Results" (Institute of Physics, Academy of Sciences, Tschechische Republik, 2004), S. 61. <a href="#fnref:64" class="backlink" role="doc-backlink">↩</a></li>
+        <li id="fn:65">LUUSE, "Maxima: Programme-Tool," https://www.luuse.io/projects/maxima/ <a href="#fnref:65" class="backlink" role="doc-backlink">↩</a></li>
+        <li id="fn:66">Toby Thurston, "Metapost Examples," https://github.com/thruston/metapost-examples?tab=GPL-3.0-1-ov-file <a href="#fnref:66" class="backlink" role="doc-backlink">↩</a></li>
+        <li id="fn:67">Vgl. Dimitri Jeannottat, Graphic Design in the Post-Digital Age, S. 211. <a href="#fnref:67" class="backlink" role="doc-backlink">↩</a></li>
+        <li id="fn:68">Vincent Dörig, "LaTeX.CSS" https://latex.vercel.app <a href="#fnref:68" class="backlink" role="doc-backlink">↩</a></li>
+        <li id="fn:69">Vgl. Jürg Lehni, "Typeface As Program," S. 81 ff. <a href="#fnref:69" class="backlink" role="doc-backlink">↩</a></li>
+        <li id="fn:70">Gerry Leonidas, "In Search of the Digital Cresci: Some Thoughts on Don Knuth's 'Digital Typography'," Information Design Journal 9, Nr. 2 & 3 (2000), S. 111 ff. <a href="#fnref:70" class="backlink" role="doc-backlink">↩</a></li>
+        <li id="fn:71">Vgl. Jacques André, "Prehistory of Digital Fonts," S. 45. <a href="#fnref:71" class="backlink" role="doc-backlink">↩</a></li>
+    </ol>
+</div>
+
+<div id="literature-section">
+    <h3 id="Literaturverzeichnis">Literaturverzeichnis</h3>
+    <div class="footnotes">
+        <ul class="bibliography-list">
+            <li><b>1.</b> André, Jacques. "Prehistory of Digital Fonts." TUGboat Volume 44, no. 1. 2023. https://www.tug.org/TUGboat/tb44-1/tb136andre-prehistory.pdf</li>
+            <li><b>2.</b> Bernau, Kai. Beyond Bézier. 2024. https://beyondbezier.ch</li>
+            <li><b>3.</b> Conrad, Demian, and Silvio Lorusso. Graphic Design in the Post-Digital Age: A Survey of Practices Fuelled by Creative Coding. 2021. https://postdigitalgraphicdesign.com/</li>
+            <li><b>4.</b> Coueignoux, Philippe. Generation of Roman Printed Fonts. PhD diss., Massachusetts Institute of Technology, 1975. https://dspace.mit.edu/bitstream/handle/1721.1/27408/02149218-MIT.pdf</li>
+            <li><b>5.</b> Früh, Roland. Beyond Bézier: Introduction. 2024. https://beyondbezier.ch</li>
+            <li><b>6.</b> Gerstner, Karl. Programme Entwerfen. Digitale Edition, hrg. von Harald Geisler. 2022 (Orig. pub. 1963). https://haraldgeisler.com/2020/06/27/programme-entwerfen-karl-gerstner/</li>
+            <li><b>7.</b> Haralambous, Yannis. Fonts & Encodings. Sebastopol, CA: O'Reilly Media. 2007.</li>
+            <li><b>8.</b> Hobby, John D. METAPOST: A User's Manual. 2022. https://www.tug.org/docs/metapost/mpman.pdf</li>
+            <li><b>9.</b> Karow, Peter. "Data Structure for Character Storage and Retrieval." US-Patent 4,630,309. Issued December 16, 1986. https://patentimages.storage.googleapis.com/38/3e/b7/494a84a0c89633/US4630309.pdf</li>
+            <li><b>10.</b> Knuth, Donald E. "Mathematical Typography." Bulletin of the American Mathematical Society Volume 1, no. 2. 1979: 337–372.</li>
+            <li><b>11.</b> Knuth, Donald E. "Lessons Learned from Metafont." Visible Language 19, no. 1. 1985: 35–53.</li>
+            <li><b>12.</b> Knuth, Donald E. Computers and Typesetting, Volume C: The METAFONTbook. Reading, MA: Addison-Wesley, 1986.</li>
+            <li><b>13.</b> Knuth, Donald E. Computers and Typesetting, Volume E: Computer Modern Typefaces. Reading, MA: Addison-Wesley, 1986.</li>
+            <li><b>14.</b> Lehni, Jürg, Peter Bilak, François Rappo, Pierre Keller, and Ecole cantonale d'art de Lausanne. "Typeface As Program." Lausanne, Switzerland: ECAL/University of art and design. 2010.</li>
+            <li><b>15.</b> Leonidas, Gerry. "In Search of the Digital Cresci: Some Thoughts on Don Knuth's 'Digital Typography'." Information Design Journal 9, no. 2 & 3. 2000. https://leonidas.net/2012/03/28/digital-cresci/</li>
+            <li><b>16.</b> Mergler, H. W., and J. R. Vargo. "One Approach to Computer Assisted Letter Design." In Proceedings of the 1968 23rd ACM National Conference, 305–19. New York: ACM, 1968. https://journals.uc.edu/index.php/vl/article/view/5032/3896.</li>
+            <li><b>17.</b> Píška, Karel. "Creating Type 1 Fonts from METAFONT Sources: Comparison of Tools, Techniques and Results." Institute of Physics, Academy of Sciences, Tschechische Republik, 2004.</li>
+            <li><b>18.</b> Ruggles, Lynn L. "Letterform Design Systems." Technical Report CS-TR-83-971. Stanford University, 1983. http://i.stanford.edu/pub/cstr/reports/cs/tr/83/971/CS-TR-83-971.pdf</li>
+            <li><b>19.</b> Ulrich, Ferdinand. "Automatic Type Design 3, Talk: Digital type from the day before yesterday and tomorrow." ANRT, 2023. https://vimeo.com/1059452704</li>
+            <li><b>20.</b> Velvetyne Type Foundry. "Open source (fonts) and the market economy: subversion/absorption?" TYPEONE #10. 2025.</li>
+        </ul>
+    </div>
+</div>
+
+<h3 id="abbildungsverzeichnis">Abbildungsverzeichnis</h3>
+<div class="footnotes">
+       <ul class="bibliography-list">
+        <li><b>Abb. 1:</b> Mergler und Vargo: One Approach to Computer Assisted Letter Design. 1968. S. 306 https://journals.uc.edu/index.php/vl/article/view/5032/3896 (Abgerufen am: 16.01.26)</li>
+        <li><b>Abb. 2:</b> Coueignoux Philippe: Generation of Roman Printed Fonts, Massachusetts, 1975. S. 49 https://dspace.mit.edu/bitstream/handle/1721.1/27408/02149218-MIT.pdf (Abgerufen am: 16.01.26)</li>
+        <li><b>Abb. 3:</b> Karow Peter: Patent Nummer 4630309, Zeichnung Blatt 7. https://patents.google.com/patent/US4630309A/en?q=(Ikarus+URW)&oq=Ikarus+URW (Abgerufen am: 16.01.26)</li>
+        <li><b>Abb. 4:</b> Haralambous Yannis, Metafont Grafik, Fonts & Encodings, O'Reilly, 2007. https://vimeo.com/1059696617?fl=pl&fe=sh#t=21m28s (Abgerufen am: 16.01.26)</li>
+        <li><b>Abb. 5:</b> https://kadist.org/program/dexter-sinister/ (Abgerufen am: 16.01.26)</li>
+        <li><b>Abb. 6:</b> https://www.metaflop.com/modulator (Abgerufen am: 16.01.26)</li>
+        <li><b>Abb. 7:</b> https://cdv.dei.uc.pt/projects/letterspecies (Abgerufen am: 16.01.26)</li>
+        <li><b>Abb. 8:</b> https://www.burrowlab.com/learn (Abgerufen am: 16.01.26)</li>
+        <li><b>Abb. 9:</b> Eigene Abbildung</li>
+        <li><b>Abb. 10:</b> Knuth Donald: Lessons learned from Metafont. Visible Language, XIX 1, Stanford 1985. S. 45, Fig. 13</li>
+        <li><b>Abb. 11:</b> LUUSE: Maxima-Programme-Tool, 2024. https://www.luuse.io/projects/maxima/ (Abgerufen am: 16.01.26)</li>
+        <li><b>Abb. 12:</b> Eigene Abbildung</li>
     </ul>
-  </article>
+</div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Typetester Slider Logic
+      const sizeSlider = document.getElementById('fontsize-slider');
+      const sizeValue = document.getElementById('fontsize-value');
+      const typeInputs = document.querySelectorAll('.typetester-input');
+
+      if (sizeSlider && sizeValue) {
+        sizeSlider.addEventListener('input', function () {
+          const newSize = this.value + 'rem';
+          sizeValue.textContent = newSize;
+          typeInputs.forEach(input => {
+            input.style.fontSize = newSize;
+          });
+        });
+      }
+
+      const menuToggle = document.getElementById('menu-toggle');
+      const sidebar = document.getElementById('sidebar');
+      const toc = document.querySelector('.toc');
+
+      if (toc && sidebar) {
+        const tocClone = toc.cloneNode(true);
+        sidebar.innerHTML = tocClone.innerHTML;
+      }
+
+      function closeMenu() {
+        sidebar.classList.remove('active');
+        menuToggle.textContent = '☰ Inhalt';
+      }
+
+      // Auto-linkify URLs in Footnotes
+      function linkify(element) {
+        if (element.tagName === 'A') return; // Skip existing links
+
+        // Iterate over child nodes to handle mixed content safely
+        Array.from(element.childNodes).forEach(child => {
+          if (child.nodeType === Node.TEXT_NODE) {
+            const text = child.textContent;
+            // Basic URL regex (starts with http/https)
+            const urlRegex = /(https?:\/\/[^\s<]+)/g;
+            if (urlRegex.test(text)) {
+              const fragment = document.createDocumentFragment();
+              let lastIndex = 0;
+              text.replace(urlRegex, (match, url, offset) => {
+                fragment.appendChild(document.createTextNode(text.slice(lastIndex, offset)));
+                const a = document.createElement('a');
+                a.href = url;
+                a.target = "_blank";
+                a.textContent = url;
+                fragment.appendChild(a);
+                lastIndex = offset + match.length;
+              });
+              fragment.appendChild(document.createTextNode(text.slice(lastIndex)));
+              element.replaceChild(fragment, child);
+            }
+          } else if (child.nodeType === Node.ELEMENT_NODE) {
+            linkify(child);
+          }
+        });
+      }
+
+      const footnotes = document.querySelectorAll('.footnotes li');
+      footnotes.forEach(li => linkify(li));
+
+      function openMenu() {
+        sidebar.classList.add('active');
+        menuToggle.textContent = '✕ Schließen';
+      }
+
+      function toggleMenu() {
+        if (sidebar.classList.contains('active')) {
+          closeMenu();
+        } else {
+          openMenu();
+        }
+      }
+
+      menuToggle.addEventListener('click', function (e) {
+        e.stopPropagation(); // Prevent document click from immediately closing it
+        toggleMenu();
+      });
+
+      // Close sidebar when clicking outside
+      document.addEventListener('click', function (event) {
+        const isClickInsideSidebar = sidebar.contains(event.target);
+
+        if (!isClickInsideSidebar && sidebar.classList.contains('active')) {
+          closeMenu();
+        }
+      });
+
+      // Also close when clicking a link in the sidebar
+      // Also close when clicking a link in the sidebar
+      sidebar.addEventListener('click', function (event) {
+        if (event.target.tagName === 'A') {
+          const parentLi = event.target.parentElement;
+          const subMenu = parentLi.querySelector('ol');
+
+          if (subMenu) {
+            // If it has a submenu, toggle it
+            event.preventDefault(); // Optional: prevent scrolling if we just want to toggle? 
+            // Better UX: Allow scroll mostly, but user asked for "expand when clicking".
+            // Let's toggle the expanded class.
+            parentLi.classList.toggle('expanded');
+
+            // If we want to navigate AND toggle, we don't preventDefault.
+            // But if we navigate, the specific section might be nice to see.
+            // Let's assume we want to navigate too, so I'll remove preventDefault if I added it mentally.
+            const url = event.target.getAttribute('href');
+            if (url && url.startsWith('#')) {
+              const target = document.querySelector(url);
+              if (target) target.scrollIntoView();
+            }
+          } else {
+            // No submenu, it's a leaf node -> close menu
+            closeMenu();
+          }
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>
