@@ -503,9 +503,9 @@
       als besonders geeigneter Anwendungsfall, um dieses Prinzip im Kommunikationsdesign zu untersuchen.</p>
     <p>Ein historischer Rückblick über computergestützte Schriftsysteme vor der Einführung von PostScript zeigt, dass
       parametrische und programmatische Ansätze bereits früh existierten, jedoch durch die Standardisierung von
-      Bézier-basierten Outline-Modellen in den Hintergrund traten. Am Beispiel von METAFONT werden Idee, Anspruch und
+      Bézier-basierten Outline-Modellen in den Hintergrund traten. Am Beispiel von Metafont werden Idee, Anspruch und
       Kritik parametrischer Schriftgestaltung analysiert.</p>
-    <p>Im praktischen Teil werden eigene Experimente in METAPOST durchgeführt, um parametrische Zeichenmethoden zu
+    <p>Im praktischen Teil werden eigene Experimente in Metapost durchgeführt, um parametrische Zeichenmethoden zu
       erforschen. Die daraus gewonnenen Erkenntnisse fließen in die Entwicklung einer offenen parametrischen Schrift und
       die Weiterentwicklung eines <em>Web-Tools</em> für flexible Typographische Kompositionen ein. Die Arbeit zeigt,
       dass parametrische Schriftgestaltung weniger als Ersatz klassischer Methoden zu verstehen ist,
@@ -543,7 +543,7 @@
         manuell gezeichneten Formen basiert – und welche Rolle können Open-Source-Tools dabei spielen?</em></blockquote>
     <p>Methodisch folgt die Arbeit einem forschend-gestalterischen Ansatz. Theorie und Praxis bilden dabei zwei sich
       ergänzende Ebenen. Eine theoretische Analyse historischer und aktueller parametrischer Systeme bildet den Rahmen
-      und Bezugspunkte, während Experimente mit METAPOST sowie die Weiterentwicklung eines <em>Web-Tools</em> den
+      und Bezugspunkte, während Experimente mit Metapost sowie die Weiterentwicklung eines <em>Web-Tools</em> den
       praktischen Kern
       der Untersuchung darstellen. Ziel ist es, durch diese Verbindung Erkenntnisse über die Potenziale parametrischer
       Schriftgestaltung zu gewinnen und zu reflektieren.</p>
@@ -551,7 +551,7 @@
     <p><b>Aufbau der Arbeit:</b> <br>
       Kapitel Zwei führt in die theoretischen Grundlagen und den Kontext von Schriftprogrammen ein. Kapitel Drei widmet
       sich historischen Systemen aus der Schriftgestaltung. Kapitel Vier behandelt explizit die
-      Geschichte und Funktionsweise von METAFONT. Kapitel Fünf geht auf den heutigen stand der Dinge ein. Kapitel Sechs
+      Geschichte und Funktionsweise von Metafont. Kapitel Fünf geht auf den heutigen stand der Dinge ein. Kapitel Sechs
       dokumentiert die experimentelle Praxis und das gestalterische Projekt, zum Schluss fasst Kapitel Sieben die
       Erkenntnisse zusammen und Kapitel Acht gibt einen Ausblick.</p>
 
@@ -668,11 +668,11 @@
       (1968)<sup id="fnref:21"><a href="#fn:21" role="doc-noteref">21</a></sup>.
       Ein System, indem Buchstaben mit Hilfe von Superellipsen und einem parametrischen Skelett beschrieben wurden.<sup
         id="fnref:22"><a href="#fn:22" role="doc-noteref">22</a></sup> Also quasi ein Vorläufer von Donald Knuths
-      METAFONT. Ein weiteres parametrisches System war CSD (Character
+      Metafont. Ein weiteres parametrisches System war CSD (Character
       Simulated Design)<span class="sidenote-marker">Abb. 2</span>, von Philippe Coueignoux
       (1973), das
       Konturen mit Hilfe von mathematischen und grammatikalischen Strukturen erzeugte. Beide Systeme blieben
-      prototypisch, zeigen aber, dass die Idee der parametrischen Schriftgenerierung bereits vor METAFONT
+      prototypisch, zeigen aber, dass die Idee der parametrischen Schriftgenerierung bereits vor Metafont
       existierte.<sup id="fnref:23"><a href="#fn:23" role="doc-noteref">23</a></sup>
     </p>
         <span class="sidenote">
@@ -715,17 +715,17 @@
     </p>
     <p>Gleichzeitig existiert bis heute eine vergleichsweise kleine, aber stabile Nische, in der alternative Systeme
       genutzt werden. Dazu zählt das Textsatzsystem TeX mit seinem Ablegerprojekt LaTeX, sowie das dazugehörige
-      Schriftsystem METAFONT, das vor allem in wissenschaftlichen Kontexten, insbesondere in der Mathematik, Informatik
-      und Physik Verwendung findet.<sup id="fnref:26"><a href="#fn:26" role="doc-noteref">26</a></sup> METAFONT<span
+      Schriftsystem Metafont, das vor allem in wissenschaftlichen Kontexten, insbesondere in der Mathematik, Informatik
+      und Physik Verwendung findet.<sup id="fnref:26"><a href="#fn:26" role="doc-noteref">26</a></sup> Metafont<span
         class="sidenote-marker">Abb. 4</span>
        ist im zeitgenössischen Typedesign weitgehend unbekannt, bietet jedoch
       durch seinen parametrischen Ansatz wichtige Ausgangspunkt für aktuelle experimentelle Ansätze im Schriftentwurf
       sowie für die vorliegende Arbeit. Daher wird im folgenden Kapitel die Entstehungsgeschichte und Funktionsweise von
-      METAFONT beschrieben.
+      Metafont beschrieben.
     </p>
     <div class="page-break"></div>
-    <h2 id="4-metafont">4.Metafont</h2>
-    <p>METAFONT sowie TeX entstanden tatsächlich aus einer tiefen Unzufriedenheit von Donald Knuth, dem Autor des
+    <h2 id="4-Metafont">4.Metafont</h2>
+    <p>Metafont sowie TeX entstanden tatsächlich aus einer tiefen Unzufriedenheit von Donald Knuth, dem Autor des
       bekannten mehrbändigen „The Art of Computer Programming“. Für den Mathematiker und Informatiker Donald Knuth war
       die visuelle Präzision seiner Texte ebenso wichtig wie deren Inhalt. Als frühere Bände noch auf mechanischen
       Bleisatzmaschinen
@@ -736,12 +736,12 @@
       minderwertig und beliebig. Typografie war für Knuth kein nebensächliches Mittel, sondern wichtiger Bestandteil
       seiner wissenschaftlichen Arbeiten.</p>
     <p>So entschloss er sich im Sommer 1977, das Problem selber anzugehen. Er wusste nicht direkt wie er starten soll
-      und das Konzept seiner METAFONT kam erst nach dem gescheiterten Versuchen die Monotype Modern Schriften zu
+      und das Konzept seiner Metafont kam erst nach dem gescheiterten Versuchen die Monotype Modern Schriften zu
       digitalisieren. Erst experimentierte Er mit Fernsehkameras, was aufgrund von Verzerrungen und Lichtempfindlichkeit
       scheiterte. Dann projizierte er Buchstaben groß an eine Wand und skizzierte die unscharfen Umrisse per Hand.
       Während dieser Skizzen kam ihm die zentrale Idee. Er wollte nicht einfach Formen kopieren, sondern die
       dahinterstehende gestalterische Absicht erfassen und in ein Computerprogramm bringen. Daraus entstand das Konzept
-      von METAFONT: Buchstaben als mathematische Konstruktionen mit variablen Parametern zu beschrieben.<sup
+      von Metafont: Buchstaben als mathematische Konstruktionen mit variablen Parametern zu beschrieben.<sup
         id="fnref:29"><a href="#fn:29" role="doc-noteref">29</a></sup></p>
     <blockquote><em>„It suddenly dawned on me that I should not simply try to copy the shapes. A human being had
         originally drawn them, so I really wanted to learn as much as possible about what was in that person’s mind at
@@ -754,8 +754,8 @@
         as it was done before; we should rather expect that we can learn to guide a computer as people have
         traditionally learned to guide a brush or a chisel.“<sup id="fnref:31"><a href="#fn:31"
             role="doc-noteref">31</a></sup></em></blockquote>
-    <p>Aus dieser Erkenntnis entstanden die 3 P’s von METAFONT: <em>„drawing with pens and parameters via programs“.<sup
-          id="fnref:32"><a href="#fn:32" role="doc-noteref">32</a></sup></em> Die Grundfunktion von METAFONT verfolgt
+    <p>Aus dieser Erkenntnis entstanden die 3 P’s von Metafont: <em>„drawing with pens and parameters via programs“.<sup
+          id="fnref:32"><a href="#fn:32" role="doc-noteref">32</a></sup></em> Die Grundfunktion von Metafont verfolgt
       einen kalligraphischen anstatt <em>„zeichnerischem“</em> Ansatz. Man <em>„zeichnet“</em> die Buchstaben nicht mehr
       als Umriss,
       sondern beschreibt, wie sie <em>„geschrieben“</em> werden sollen. Ein paar Koordinaten-Punkte definieren die
@@ -766,7 +766,7 @@
       einer <em>Meta-Font</em>, denn die gesamte Familie von Glyphen, verschiedene Schnitte, Stile usw. wird in einem
       einzigen
       Modell zusammenfasst.</p>
-    <p>Knuth veröffentlichte die erste Version von METAFONT 1979, mit der Hilfe von bekannten Typographen wie Charles
+    <p>Knuth veröffentlichte die erste Version von Metafont 1979, mit der Hilfe von bekannten Typographen wie Charles
       Bigelow, Matthew Carter, Kris Holmes, Richard Southall und Herman Zapf.<sup id="fnref:34"><a href="#fn:34"
           role="doc-noteref">34</a></sup> Ziel war es, verschiedene Bitmap-Schriften
       zu erzeugen für verschiedene Größen und Stile durch parametrische Variation. Diese Idee der automatischen
@@ -777,9 +777,9 @@
           role="doc-noteref">35</a></sup> Diese erste Version war eine Art Prototyp und dadurch schwer
       zu bedienen, sie verfolgte einen naiven Ansatz, denn Variationen in der
       Stiftrotation sowie der Stiftbreite entlang des Skelett-Pfads waren damals noch nicht möglich.
-      Darauf folgte 1984 eine überarbeitete Version von METAFONT, welche diese Details berücksichtigte. Buchstaben,
+      Darauf folgte 1984 eine überarbeitete Version von Metafont, welche diese Details berücksichtigte. Buchstaben,
       beziehungsweise einzelne Komponente können nun zusätzlich auch als Umrisse mit Bézier-Kurven gezeichnet werden.
-      Ein Jahr später wurde die bekannteste METAFONT-Schrift „Computer-Modern“ veröffentlicht. Diese Schrift verfügt
+      Ein Jahr später wurde die bekannteste Metafont-Schrift „Computer-Modern“ veröffentlicht. Diese Schrift verfügt
       insgesamt über 62
       steuerbare Parameter, wodurch sie sich in vielen Feinheiten umformen lässt.<sup id="fnref:36"><a href="#fn:36"
           role="doc-noteref">36</a></sup></p>
@@ -790,8 +790,8 @@
         distract us from the chief characteristics of the forms.“<sup id="fnref:37"><a href="#fn:37"
             role="doc-noteref">37</a></sup></em></blockquote>
 
-    <h3 id="4-1-warum-metafont-scheiterte">4.1 Warum Metafont scheiterte</h3>
-    <p>Obwohl METAFONT einen interessanten alternativen Ansatz bot, wurde es damals in der Schriftgestaltungsszene nicht
+    <h3 id="4-1-warum-Metafont-scheiterte">4.1 Warum Metafont scheiterte</h3>
+    <p>Obwohl Metafont einen interessanten alternativen Ansatz bot, wurde es damals in der Schriftgestaltungsszene nicht
       besonders ernst genommen, was man auch anhand von Reaktionen zu „The Concept of a Meta-Font“ sehen kann:</p>
     <blockquote><em>„The concept of the Meta-Font attacks all the sensibilities of professionals who work with type.“
         –Gary Gore <br><br>
@@ -801,24 +801,24 @@
         „Besides being a designer, I have no objection to act as a systems operator, but I don’t want to become a
         programmer - even less a parameterizer.“ –Gerard Unger<sup id="fnref:38"><a href="#fn:38"
             role="doc-noteref">38</a></sup></em></blockquote>
-    <p>Die funktionsweise von METAFONT und Software allgemein ist ziemlich abstrakt und logisch. Menschen die sich in
+    <p>Die funktionsweise von Metafont und Software allgemein ist ziemlich abstrakt und logisch. Menschen die sich in
       Software vertiefen können, denken meist auch in abstrakter und logischer Weise, doch Design ist mehr emotional als
       logisch. Die klassische Outline Methode ist direkter und ermöglicht
-      eine instinktivere Arbeitsweise. Die Arbeit mit dem Schriftsatzsystem TeX sowie METAFONT involviert einen langen
+      eine instinktivere Arbeitsweise. Die Arbeit mit dem Schriftsatzsystem TeX sowie Metafont involviert einen langen
       Prozess. Mehrere Programme mussten durchlaufen werden um eine Grafik zu erzeugen und diese anzuzeigen.<sup
         id="fnref:39"><a href="#fn:39" role="doc-noteref">39</a></sup></p>
     <blockquote><em>„lnteraction with the system can be slow because the system is declarative rather than interactive,
-        requiring the designer to first create the METAFONT containing a mathematical specification of the letterforms,
-        and then to run the METAFONT system with the letterform program.“<sup id="fnref:40"><a href="#fn:40"
+        requiring the designer to first create the Metafont containing a mathematical specification of the letterforms,
+        and then to run the Metafont system with the letterform program.“<sup id="fnref:40"><a href="#fn:40"
             role="doc-noteref">40</a></sup></em></blockquote>
-    <p>Hätte es damals so etwas wie ein graphisches user interface gegeben um METAFONT code schneller zu visualisieren,
-      wären manche Schriftgestalter*innen die intuitiv und reaktiv arbeiten weniger gehemmt gewesen, und METAFONT hätte
+    <p>Hätte es damals so etwas wie ein graphisches user interface gegeben um Metafont code schneller zu visualisieren,
+      wären manche Schriftgestalter*innen die intuitiv und reaktiv arbeiten weniger gehemmt gewesen, und Metafont hätte
       sich stärker verbreitet.</p>
 
     <h2 id="5-wiederentdeckung-parametrischer-gestaltung">5. Parametrische Gestaltung Heute</h2>
-    <p>Die Funktionsweise von METAFONT war ihrer Zeit voraus und ist auch 40 Jahre später noch relevant, da sie die
+    <p>Die Funktionsweise von Metafont war ihrer Zeit voraus und ist auch 40 Jahre später noch relevant, da sie die
       Grundlage für eine parametrische Gestaltung von Schrift liefert. Einige zeitgenössische Projekte
-      greifen das METAFONT-System direkt wieder auf und führen uns vor Augen, welches Potenzial in diesem Ansatz
+      greifen das Metafont-System direkt wieder auf und führen uns vor Augen, welches Potenzial in diesem Ansatz
       steckte, und regen damit zum Nachdenken über heutige Gestaltungswerkzeuge an. Beispiele hierfür sind
       „MTDBT2F4D“<span class="sidenote-marker">Abb. 5</span>
       von Dexter Sinister (2012),<sup id="fnref:41"><a href="#fn:41" role="doc-noteref">41</a></sup> „“<span
@@ -888,17 +888,17 @@
       meist Studierende und Non-Profits, wurden von den unkonventionellen Formen und Konzepten angezogen. Jeder konnte
       Beiträge leisten, Schriften verbessern oder weiterentwickeln, wodurch ein dynamisches, offenes Netzwerk
       entstand.<sup id="fnref:52"><a href="#fn:52" role="doc-noteref">52</a></sup></p>
-    <p>Im Vergleich zu Donald Knuths Zeit wirkt das heute anders. Als Knuth METAFONT entwickelte, war Offenheit
+    <p>Im Vergleich zu Donald Knuths Zeit wirkt das heute anders. Als Knuth Metafont entwickelte, war Offenheit
       selbstverständlich, vor allem, weil digitale Schriftgestaltung noch ein wissenschaftliches Thema war und der
       Austausch im Mittelpunkt stand. Heute ist Offenheit keine Grundvoraussetzung mehr, sondern eine Entscheidung. Wer
       offene Werkzeuge nutzt, tut das nicht, weil es die einzige Möglichkeit ist, sondern weil es neue Freiheiten
       schafft. Teilen statt abschotten, ausprobieren statt perfektionieren, weiterentwickeln statt festhalten.</p>
     <div class="page-break"></div>
-    <h2 id="6-eigene-experimente-in-metapost">6. Eigene Experimente in Metapost</h2>
+    <h2 id="6-eigene-experimente-in-Metapost">6. Eigene Experimente in Metapost</h2>
     <p><b>Was wird untersucht? :</b><br>
       Ziel des Experiments war es, parametrische Schriftgestaltung praktisch zu erfahren, und herauszufinden, welche
       Potenziale ein altes, wenig genutztes System unter aktuellen Bedingungen bieten kann. Untersucht wurde, wie sich
-      Schriftformen verändern, wenn sie über Code und Parameter in der METAPOST Sprache erzeugt werden und welche
+      Schriftformen verändern, wenn sie über Code und Parameter in der Metapost Sprache erzeugt werden und welche
       gestalterischen Konsequenzen daraus entstehen. Es wurde ein Spannungsfeld zwischen mathematischer Genauigkeit und
       optischer Richtigkeit erkundet sowie die Wirkung extremer Parameterwerte getestet.</p>
     <p>Dabei wurde bewusst auf die klassische Outline-Methode verzichtet. Obwohl Typedesigner*innen seit langem Schrift
@@ -911,15 +911,15 @@
 
     <h3 id="6-1-aufbau-des-experiments">6.1 Aufbau des Experiments</h3>
     <p><b>Warum Metapost? :</b><br>
-      METAFONT wurde von Donald Knuth unter einer Open-Source-Lizenz entwickelt. Dadurch war es John D. Hobby möglich,
+      Metafont wurde von Donald Knuth unter einer Open-Source-Lizenz entwickelt. Dadurch war es John D. Hobby möglich,
       das System weiterzuentwickeln und an eigene Anforderungen anzupassen. Aus dieser Weiterentwicklung entstand
-      METAPOST, ein Programm zur Erzeugung von PostScript und SVG-Grafiken, ursprünglich für Abbildungen in technischen
+      Metapost, ein Programm zur Erzeugung von PostScript und SVG-Grafiken, ursprünglich für Abbildungen in technischen
       Dokumenten gedacht.<sup id="fnref:55"><a href="#fn:55" role="doc-noteref">55</a></sup></p>
-    <p>METAPOST ist damit eine Abspaltung von METAFONT und unterliegt ebenfalls einer Open-Source-Lizenz. Beide Systeme
+    <p>Metapost ist damit eine Abspaltung von Metafont und unterliegt ebenfalls einer Open-Source-Lizenz. Beide Systeme
       sind syntaktisch eng verwandt, unterscheiden sich jedoch im Ausgabeformat. Durch die Unterstützung des
-      Vektorformats (SVG) anstelle von Bitmaps eignet sich METAPOST besser für zeitgemäße digitale Anwendungen.
+      Vektorformats (SVG) anstelle von Bitmaps eignet sich Metapost besser für zeitgemäße digitale Anwendungen.
     </p>
-    <p>Auf Basis von METAPOST entwickelte das Kollektiv LUUSE einen Open-Source-Font-Editor, der parametrische
+    <p>Auf Basis von Metapost entwickelte das Kollektiv LUUSE einen Open-Source-Font-Editor, der parametrische
       Schriftgestaltung visuell erfahrbar macht. Dieser Editor mit dem Namen „Plancton“.<sup id="fnref:56"><a
           href="#fn:56" role="doc-noteref">56</a></sup> wurde von dem technischen Mitarbeiter Simon Thiefes an der HAW
       Hamburg weiterentwickelt, um ihn insbesondere für Studierende besser nutzbar zu machen<sup id="fnref:57"><a
@@ -933,9 +933,9 @@
       System von Anfang an nur erschwert möglich gewesen.
     </p>
     <p>Die anschließende experimentelle Phase folgte keinem linearen Prozess, sondern war als offener Erkundungsraum
-      gedacht. Zu Beginn stand das Verständnis der METAFONT- bzw. METAPOST-Sprache selbst im Vordergrund. Es existieren
+      gedacht. Zu Beginn stand das Verständnis der Metafont- bzw. Metapost-Sprache selbst im Vordergrund. Es existieren
       zwar umfangreiche Handbücher von Donald E. Knuth und John D. Hobby, die versuchen, jede Funktion des Programms zu
-      erklären, für unerfahrene Gestalter*innen wirken diese durch ihre kompexität jedoch oft abschreckend. Im METAFONT
+      erklären, für unerfahrene Gestalter*innen wirken diese durch ihre kompexität jedoch oft abschreckend. Im Metafont
       Book sind besonders komplexe Stellen mit sogenannten „dangerous bend“-Symbolen markiert, als Hinweis darauf, dass
       vollständiges Verständnis nicht immer vorgesehen ist.<sup id="fnref:58"><a href="#fn:58"
           role="doc-noteref">58</a></sup> Zusätzlich fehlen in den online verfügbaren PDF-Versionen die begleitenden
@@ -945,7 +945,7 @@
       der gesamten Arbeit.</p>
     <p>Nachdem grundlegende Befehle erlernt wurden, konnten einfache Parameter wie Strichstärke, Strichkontrast oder
       Stiftrotation als Ausgangspunkt genutzt werden, um grundlegende Zusammenhänge zwischen Code und Form zu verstehen.
-      Weitere Einsichten entstanden durch die Analyse und Modifikation frei zugänglicher METAPOST und METAFONT-Schriften
+      Weitere Einsichten entstanden durch die Analyse und Modifikation frei zugänglicher Metapost und Metafont-Schriften
       wie zum Beispiel der „meta-old-french“ von LUUSE (2018).<sup id="fnref:59"><a href="#fn:59"
           role="doc-noteref">59</a></sup> oder der „DOF“ von Paul Bernhard (2018)<sup id="fnref:60"><a href="#fn:60"
           role="doc-noteref">60</a></sup></p>
@@ -955,7 +955,7 @@
       und in der
       gesamten Schrift mehrfach anzuwenden. Dadurch wird der Code einzelner Glyphen deutlich kompakter, und die Schrift
       lässt sich zunehmend als zusammenhängendes System begreifen.
-    <p>Erst auf dieser Grundlage entstand eine METAPOST-Version der Stempel-Garamond. Die Wahl fiel auf dieses
+    <p>Erst auf dieser Grundlage entstand eine Metapost-Version der Stempel-Garamond. Die Wahl fiel auf dieses
       klassische Old-Style-Serifenmodell, da es heutzutage zahlreiche digitale Varianten der Garamond gibt. Diese
       basieren jedoch fast ausschließlich auf der Outline-Methode und zeichnen die Formen im Wesentlichen nach. Einen
       parametrischen Ansatz oder Raum für Experimente gibt es dort kaum. Die Garamond gilt außerdem als besonders gut
@@ -973,9 +973,9 @@
     <blockquote><em>„6. What is the thinnest possible stroke width of a newspaper text face?“<sup id="fnref:61"><a
             href="#fn:61" role="doc-noteref">61</a></sup>
       </em></blockquote>
-    <p>Solche Fragen lassen sich mit METAFONT auf praktische Weise beantworten, indem man Parameter schrittweise neu
+    <p>Solche Fragen lassen sich mit Metafont auf praktische Weise beantworten, indem man Parameter schrittweise neu
       definiert oder anpasst. Dabei kann man direkt beobachten, wie sich jede Anpassung auf das gesamte Schriftbild
-      auswirkt. Diese experimentelle Herangehensweise besitzt einen besonderen Reiz, den auch Donald Knuth im METAFONT
+      auswirkt. Diese experimentelle Herangehensweise besitzt einen besonderen Reiz, den auch Donald Knuth im Metafont
       Book beschreibt:</p>
     <div class="page-break"></div>
     <blockquote><em>„Moreover, the shapes can be defined in terms of variable parameters; computers can „draw“ new fonts
@@ -1266,8 +1266,8 @@
     <p>Neben den bewussten Anpassungen und Experimenten spielten auch Zufallswerte eine Rolle. So entstanden
       unerwartete Ergebnisse durch Logikfehler, verdrehte mathematische Zeichen oder sonstige Glitches.<span
         class="sidenote-marker">Abb. 9</span> Diese Fehler
-      werden nicht nur als Störung verstanden, sondern als Teil des gestalterischen Prozesses in METAFONT. Um den
-      Charakter von METAFONT besser zu vermitteln, zeigt Donald Knuth seine „Metaflops"<span
+      werden nicht nur als Störung verstanden, sondern als Teil des gestalterischen Prozesses in Metafont. Um den
+      Charakter von Metafont besser zu vermitteln, zeigt Donald Knuth seine „Metaflops"<span
         class="sidenote-marker">Abb. 10</span>, Ergebnisse die durch Zufälle
       entstanden sind. Er stellte dabei fest:
     </p>
@@ -1283,7 +1283,7 @@
           <span class="figure-caption">Abb. 10: Knuths Metaflops</span>
         </span>
       </span>
-    <p>Parallel dazu wurden die gestalterischen Grenzen von METAPOST erkundet. Dafür wurden verschiedene Effekte aus
+    <p>Parallel dazu wurden die gestalterischen Grenzen von Metapost erkundet. Dafür wurden verschiedene Effekte aus
       Handbüchern und offenen Beispielsammlungen entnommen, neu kombiniert und als <em>Makros</em> definiert. Auf diese
       Weise
       ließen sich die Effekte konsistent auf alle Glyphen anwenden, es entstanden neue experimentelle Zeichenmethoden,
@@ -1293,24 +1293,24 @@
       einen zunächst planlos zurückließen. Vor allem in der Anfangsphase führte dies häufig zu starker Frustration und
       dazu, dass die gesamte Schriftdatei von Grund auf neu aufgebaut werden musste. Mit der Zeit lernte man jedoch,
       besser mit solchen Fehlern umzugehen. Leider stellte sich erst gegen Ende heraus, dass sich eine variable Schrift
-      mit METAPOST nicht so einfach erzeugen lässt wie zunächst angenommen. In diesem Fall standen „Fehler“, also
+      mit Metapost nicht so einfach erzeugen lässt wie zunächst angenommen. In diesem Fall standen „Fehler“, also
       automatisch generierte Artefakte im Weg. Denn die Konvertierung der Stiftformen in Outlines durch
-      METAPOST erzeugt stark fragmentierte Pfade, wodurch die ganze Schriftdatei unübersichtlich wird und eine nachträgliche
+      Metapost erzeugt stark fragmentierte Pfade, wodurch die ganze Schriftdatei unübersichtlich wird und eine nachträgliche
       Bearbeitung für variable und wirklich saubere Schriften notwendig wird.<sup id="fnref:64"><a href="#fn:64"
           role="doc-noteref">64</a></sup>
       Da diese Nachbearbeitung jedoch sehr zeitintensiv wäre, wurde der Fokus von der Erzeugung von TrueType-Fonts, auf
-      eine praktische Anwendung des METAPOST System in neuen, und dynamischen Umfeld verschoben, genauer gesagt auf die
+      eine praktische Anwendung des Metapost System in neuen, und dynamischen Umfeld verschoben, genauer gesagt auf die
       Weiterentwicklung eines <em>Web-Tools.</em></p>
 
     <h3 id="6-3-anwendungen-im-web-tool">6.3 Anwendungen im Web Tool</h3>
-    <p>Die in den METAPOST-Experimenten gewonnenen Erkenntnisse flossen in die Weiterentwicklung des webbasierten
+    <p>Die in den Metapost-Experimenten gewonnenen Erkenntnisse flossen in die Weiterentwicklung des webbasierten
       Poster-Tools des LUUSE-Kollektivs ein. Das „Maxima-Programme„-Tool<sup id="fnref:65"><a href="#fn:65"
           role="doc-noteref">65</a></sup><span class="sidenote-marker">Abb. 11</span> ermöglicht es Bewohner*innen von
       Maxima, Veranstaltungen in eine
       Online-Tabelle einzutragen. Durch CSS wird die Tabelle ausgelesen, daraus entsteht ein automatisches Layout der
       Veranstaltungen. Die Schrift und das Layout passen sich bei jedem neuen Eintrag automatisch an die jeweilige
       Inhaltsmenge und den verfügbaren Raum an. Der Output ist ein flexibles Poster Layout im Format A3. All das wird
-      ermöglicht durch Python-Skripte und den Einsatz von METAPOST. Das Tool zeigt, dass METAPOST-Schriften auf
+      ermöglicht durch Python-Skripte und den Einsatz von Metapost. Das Tool zeigt, dass Metapost-Schriften auf
       dynamische Umgebungen reagieren können, etwa durch die automatische Skalierung von Höhe und Breite.
     </p>
        <span class="sidenote">
@@ -1328,7 +1328,7 @@
       Ziel war es, dieses Tool für die eigenen Fragestellung weiterzudenken und so die Funktionsweise parametrischer
       Schrift sichtbar zu machen. Die Schrift wird hier als veränderbares System erlebt. Parameter lassen sich quasi in
       Echtzeit anpassen und erzeugen unterschiedlichste Varianten aus der selben Grundstruktur. Auf diese Weise wird das
-      METAFONT-Prinzip unmittelbar erfahrbar.</p>
+      Metafont-Prinzip unmittelbar erfahrbar.</p>
     <p><b>Umsetzung:</b><br>
       Zu Beginn stellte sich das Verständnis der Funktionsweise des Tools als Herausforderung dar, da die Dokumentation
       auf GitHub nur sehr knapp gehalten war. Erst durch eine E-Mail an das LUUSE-Kollektiv und eine ausführliche
@@ -1348,11 +1348,11 @@
     <p>Das Layout reagiert nun dynamischer auf den Inhalt. Überschriften können länger werden und die Spalten passen
       sich automatisch an die neue Textlänge an. Zusätzlich können anstelle von Text nun auch grafische Elemente
       (SVG) direkt in die Spalten geladen werden. Die Auswahl dieser Grafiken fiel in diesem Fall auf kleine
-      METAPOST-Zeichnungen, die größtenteils der umfangreichen Sammlung „metapost-examples“ von Toby Thurston auf GitHub
+      Metapost-Zeichnungen, die größtenteils der umfangreichen Sammlung „Metapost-examples“ von Toby Thurston auf GitHub
       entnommen wurden.<sup id="fnref:66"><a href="#fn:66" role="doc-noteref">66</a></sup> Diese stehen unter der GNU
       GPL v3-Lizenz und wurden für meinen Zweck leicht angepasst. Alle Grafiken wurden auf die gleiche Größe
       gebracht und über einen gemeinsamen Parameter verknüpft, sodass sie schnell und konsistent verändert werden
-      können. Die kleinen Zeichnungen verweisen dabei indirekt auf METAPOST, das System, das für technische Abbildungen
+      können. Die kleinen Zeichnungen verweisen dabei indirekt auf Metapost, das System, das für technische Abbildungen
       entwickelt wurde aber ebenso zur Formerzeugung von Schrift genutzt werden kann.</p>
     <p>Als letztes wurden die wichtigsten Parameter der Garamond-Meta über das GUI in das Frontend integriert. So kann
       die Schrift schnell verändert werden, ohne das <em>Web-Tool</em> zu verlassen. Nutzer*innen können verschiedenen
@@ -1389,7 +1389,7 @@
           role="doc-noteref">68</a></sup> Die Library lässt die Website wie ein wissenschaftliches LATEX-Dokument
       aussehen. Diese Gestaltung wurde bewusst gewählt, denn sie verweist, über die „Computer-Modern“ -Schrift auf die
       typografische Arbeit von Donald Knuth und würdigt seine lange Arbeit an den Systemen. Ein schönes Detail in der
-      ganzen Geschichte von METAFONT ist, dass nachdem Knuth 1984 METAFONT und TeX überarbeitet hatte, die Systeme
+      ganzen Geschichte von Metafont ist, dass nachdem Knuth 1984 Metafont und TeX überarbeitet hatte, die Systeme
       schließlich eine typografische Qualität erreichten, die auch im Bildungswesen anerkannt wurde. In der Folge begann
       die American Mathematical Society (AMS), Autor*innen dazu zu ermutigen, ihre schriftlichen Arbeiten für
       „Transactions of the American Mathematical Society“ in TeX-Form einzureichen, ausgerechnet für ein Journal, dessen
@@ -1405,7 +1405,7 @@
       unterschiedliche Bedingungen reagieren kann. Besonders deutlich wird dieses Potenzial in dynamischen Anwendungen,
       etwa in automatisierten Layoutsystemen oder webbasierten Formaten, in denen sich Schrift flexibel an Inhalt und
       Kontext anpasst. Auch für zukünftige gestalterische Anwendungen könnte dieser Aspekt relevant bleiben.
-      Zwar werden durch METAFONT strukturelle Zusammenhänge explizit formuliert, jedoch bedeutet dies nicht, dass der
+      Zwar werden durch Metafont strukturelle Zusammenhänge explizit formuliert, jedoch bedeutet dies nicht, dass der
       gestalterische Entwurfsprozess selbst abgebildet wird. Wie Gerry Leonidas in <em>„In search of the digital
         Cresci“</em> betont, ist das Ergebnis des Meta-Designs
     <blockquote><em>„[...] nothing more than the final trace of the process, not in any way a representation of the
@@ -1422,7 +1422,7 @@
     sondern fördern auch kollektives Lernen und eine experimentelle Haltung jenseits etablierter Standards.</p>
 
     <h2 id="8-schluss">8. Schluss</h2>
-    <p>Diese Arbeit zeigt, dass parametrische Schriftgestaltung weniger eine alternative Technik, sondern vielmehr eine veränderte Haltung zum Entwerfen darstellt. Schrift wird nicht gezeichnet, sondern beschrieben und geschrieben, nicht als abgeschlossenes Objekt, sondern als offenes und frei zugängliches System gedacht. Die Experimente mit METAPOST verdeutlichen, dass das Arbeiten mit Regeln, Parametern und auch Fehlern zwar eine Herausforderung ist, aber auch neue gestalterische Spielräume eröffnet und unerwartete Ideen hervorbringt. Klassische Entwurfsmethoden werden dadurch nicht ersetzt, sondern sinnvoll ergänzt. Besonders im Zusammenspiel mit Open-Source-Tools und in dynamischen Anwendungen zeigt sich das Potenzial <em>parametrischer Zeichen</em> als zeitgemäßer Zugang zur Schriftgestaltung. Die Arbeit versteht sich nicht als Vergleich verschiedener Schriftsysteme, sondern als Ausgangspunkt für weiteres Denken jenseits etablierter Normen und als Einladung zum Experimentieren und zum offenen Teilen eigener Prozesse, um kollektives Lernen unter Gestalter*innen zu ermöglichen, ganz nach wissenschaftlichen Open-Source-Prinzipien.</p>
+    <p>Diese Arbeit zeigt, dass parametrische Schriftgestaltung weniger eine alternative Technik, sondern vielmehr eine veränderte Haltung zum Entwerfen darstellt. Schrift wird nicht gezeichnet, sondern beschrieben und geschrieben, nicht als abgeschlossenes Objekt, sondern als offenes und frei zugängliches System gedacht. Die Experimente mit Metapost verdeutlichen, dass das Arbeiten mit Regeln, Parametern und auch Fehlern zwar eine Herausforderung ist, aber auch neue gestalterische Spielräume eröffnet und unerwartete Ideen hervorbringt. Klassische Entwurfsmethoden werden dadurch nicht ersetzt, sondern sinnvoll ergänzt. Besonders im Zusammenspiel mit Open-Source-Tools und in dynamischen Anwendungen zeigt sich das Potenzial <em>parametrischer Zeichen</em> als zeitgemäßer Zugang zur Schriftgestaltung. Die Arbeit versteht sich nicht als Vergleich verschiedener Schriftsysteme, sondern als Ausgangspunkt für weiteres Denken jenseits etablierter Normen und als Einladung zum Experimentieren und zum offenen Teilen eigener Prozesse, um kollektives Lernen unter Gestalter*innen zu ermöglichen, ganz nach wissenschaftlichen Open-Source-Prinzipien.</p>
     
         <div class="page-break"></div>
 <span class="hint-print">
