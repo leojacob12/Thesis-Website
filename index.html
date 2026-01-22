@@ -144,6 +144,7 @@
       color: #333;
       display: block;
       margin-bottom: 5px;
+      
     }
 
     #sidebar a:hover {
@@ -162,6 +163,7 @@
     #sidebar li.expanded>ol {
       display: block;
     }
+    
 
     @media print {
 
@@ -205,6 +207,14 @@
       color: #666;
       margin-left: 0.2rem;
     }
+    .sidebar-gif {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%; /* Passt sich der Breite des Sidebars an */
+  height: auto; /* Behält das Seitenverhältnis bei */
+  display: block;
+}
 
     @media print {
 
@@ -420,7 +430,9 @@
   </style>
 
   <button id="menu-toggle">☰ Inhalt</button>
-  <div id="sidebar"></div>
+  <div id="sidebar"> 
+    <img src="GIF_GRAFIK.gif" class="sidebar-gif" alt="Sidebar Animation">
+</div>
 
   <header class="title-page">
     <div class="university-header">
