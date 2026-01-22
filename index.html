@@ -1694,31 +1694,22 @@
       // Also close when clicking a link in the sidebar
       // Also close when clicking a link in the sidebar
       sidebar.addEventListener('click', function (event) {
-        if (event.target.tagName === 'A') {
-          const parentLi = event.target.parentElement;
-          const subMenu = parentLi.querySelector('ol');
+   if (event.target.tagName === 'A') {
+    const parentLi = event.target.parentElement;
+    const subMenu = parentLi.querySelector('ol');
 
-          if (subMenu) {
-            // If it has a submenu, toggle it
-            event.preventDefault(); // Optional: prevent scrolling if we just want to toggle? 
-            // Better UX: Allow scroll mostly, but user asked for "expand when clicking".
-            // Let's toggle the expanded class.
-            parentLi.classList.toggle('expanded');
-
-            // If we want to navigate AND toggle, we don't preventDefault.
-            // But if we navigate, the specific section might be nice to see.
-            // Let's assume we want to navigate too, so I'll remove preventDefault if I added it mentally.
-            const url = event.target.getAttribute('href');
-            if (url && url.startsWith('#')) {
-              const target = document.querySelector(url);
-              if (target) target.scrollIntoView();
-            }
-          } else {
-            // No submenu, it's a leaf node -> close menu
-            closeMenu();
-          }
-        }
-      });
+    if (subMenu) {
+      // Entferne hier event.preventDefault(), damit der Link funktioniert!
+      parentLi.classList.toggle('expanded');
+      
+      // Falls das Menü offen bleiben soll, wenn man auf 4.0 klickt, 
+      // lassen wir closeMenu() hier weg.
+    } else {
+      // Wenn es kein Untermenü hat (wie 4.1), schließt sich die Sidebar
+      closeMenu();
+    }
+  }
+});
     });
   </script>
 </body>
