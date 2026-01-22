@@ -99,8 +99,8 @@
 
     /* Hide the default abstract style for now if it conflicts, or just leave it below */
 
-    /* Sidebar Styles */
-    #sidebar {
+    /*  Styles */
+    # {
 
       position: fixed;
       top: 0;
@@ -117,7 +117,7 @@
       font-size: 0.9rem;
     }
 
-    #sidebar.active {
+    #.active {
       left: 0;
     }
 
@@ -163,13 +163,16 @@
     #sidebar li.expanded>ol {
       display: block;
     }
-        .sidebar-gif {
+/* Das GIF absolut am unteren Rand des Sidebars fixieren */
+.sidebar-gif {
   position: absolute;
   bottom: 0;
   left: 0;
-  width: 100%; /* Passt sich der Breite des Sidebars an */
-  height: auto; /* Behält das Seitenverhältnis bei */
+  width: 100%; /* Füllt die 300px Breite voll aus */
+  height: auto;
   display: block;
+  z-index: 1010; /* Höher als der Sidebar-Hintergrund */
+  pointer-events: none; /* Man kann durch das GIF hindurchklicken, falls ein Link dahinter liegt */
 }
     
 
